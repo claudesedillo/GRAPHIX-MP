@@ -82,7 +82,6 @@ console.log(saturnCube.position);
             
 var animate = function () {
     requestAnimationFrame( animate );
-
     sunCube.rotation.y += 0.1;
     mercuryCube.rotation.y += 0.1;
     earthCube.rotation.y += 0.1;
