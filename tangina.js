@@ -23,7 +23,7 @@ var saturnMaterial = new THREE.MeshBasicMaterial( { color: 0xffa700 } );
 
 var loader = new THREE.TextureLoader();
 loader.load(
-	'assets/mars/mars.jpg',
+	'assets/planets/mars.jpg',
 	function ( texture ) {
 		// in this example we create the material when the texture is loaded
 		marsMaterial = new THREE.MeshBasicMaterial( {
@@ -34,8 +34,8 @@ loader.load(
         planets.push(mars);
         scene.add(mars);
         mars.position.set(0, 0, -1);
-        var quaternion = new THREE.Quaternion().setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), 23.5 );
-        mars.rotation = new THREE.Euler().setFromQuaternion( quaternion );
+        console.log("mars position");
+        console.log(mars.position);
 	},
 
 	undefined,
@@ -88,7 +88,6 @@ var animate = function () {
     earthCube.rotation.y += 0.1;
     jupiterCube.rotation.y += 0.1;
     saturnCube.rotation.y += 0.1;
-    planets[0].rotateOnAxis( new THREE.Vector3( 0, 1, 0 ), 0.05 );
     renderer.render(scene, camera);
 };
 
