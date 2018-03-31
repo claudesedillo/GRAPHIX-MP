@@ -1,10 +1,32 @@
 var planets = [];
 var planetNames = [];
-var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 1, 10000 );
-var renderer = new THREE.WebGLRenderer();
-renderer.setSize( window.innerWidth, window.innerHeight );
-document.body.appendChild( renderer.domElement );
+
+var scene, camera, renderer, backgroundScene, backgroundCamera;
+
+function initScene(){
+    scene = new THREE.Scene();
+
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 1, 10000 );
+    renderer = new THREE.WebGLRenderer();
+
+    backgroundScene = new THREE.Scene();
+    backgroundCamera = new THREE.Camera();
+
+    texture = THREE.ImageUtils.loadTexture( 'assets/backgrounds/galaxy_starfield.png' );
+    backgroundMesh = new THREE.Mesh(
+        new THREE.PlaneGeometry(2, 2, 0),
+        new THREE.MeshBasicMaterial({
+            map: texture
+        }));
+    backgroundMesh .material.depthTest = false;
+    backgroundMesh .material.depthWrite = false;
+    
+    backgroundScene .add(backgroundCamera );
+    backgroundScene .add(backgroundMesh );
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+    document.body.appendChild( renderer.domElement );
+}
 
 var terrestrialGeometry = new THREE.SphereGeometry(0.5, 32, 16);
 var sunGeometry = new THREE.SphereGeometry(3, 32, 16);
@@ -58,11 +80,14 @@ function createPlanet(name, color, geometry, filePath){
 
 function animate() {
     requestAnimationFrame(animate);
-    renderer.render(scene, camera);
     
     planets.forEach(function(planet) {
         planet.rotation.y += 0.01;
     });
+    renderer.autoClear = false;
+    renderer.clear();
+    renderer.render(backgroundScene , backgroundCamera );
+    renderer.render(scene, camera);
 }
 
 var initialpos = -45;
@@ -84,6 +109,7 @@ function positionPlanet(planet, name){
     console.log(planet.position);
 }
 
+initScene();
 init();
 animate();
 
