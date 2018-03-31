@@ -24,6 +24,8 @@ function initScene(){
     backgroundScene .add(backgroundCamera );
     backgroundScene .add(backgroundMesh );
 
+    renderer.gammaInput = true;
+    renderer.gammaOutput = true;
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
 }
@@ -32,21 +34,22 @@ var terrestrialGeometry = new THREE.SphereGeometry(0.5, 32, 16);
 var sunGeometry = new THREE.SphereGeometry(3, 32, 16);
 var gasGiantGeometry = new THREE.SphereGeometry(1, 32, 16);
 
-function init(){
-    console.log("I am at init");
-    createPlanet("Sun", 0xefff31, sunGeometry, "assets/planets/sun.jpg");
-    createPlanet("Mercury", 0xc47f2e, terrestrialGeometry, "assets/planets/mercury.jpg");
-    createPlanet("Venus", 0x9c31bc, terrestrialGeometry, "assets/planets/venus.jpg");
-    createPlanet("Earth", 0x4069f2, terrestrialGeometry, "assets/planets/earth.jpg");
-    createPlanet("Mars", 0xa05c18, terrestrialGeometry, "assets/planets/mars.jpg");
-    createPlanet("Jupiter", 0xaf7b3e, gasGiantGeometry, "assets/planets/jupiter.jpg");
-    createPlanet("Saturn", 0xf8f021, gasGiantGeometry, "assets/planets/saturn.jpg");
-    createPlanet("Neptune", 0x2129ef, gasGiantGeometry, "assets/planets/neptune.jpg");
-    createPlanet("Uranus", 0x31ffff, gasGiantGeometry, "assets/planets/uranus.jpg");
+function initLights(){
+    createPlanet("Sun", sunGeometry, "assets/planets/sun.jpg");
 }
 
-function createPlanet(name, color, geometry, filePath){
-    console.log("I am at createPlanet");
+function init(){
+    createPlanet("Mercury", terrestrialGeometry, "assets/planets/mercury.jpg");
+    createPlanet("Venus", terrestrialGeometry, "assets/planets/venus.jpg");
+    createPlanet("Earth", terrestrialGeometry, "assets/planets/earth.jpg");
+    createPlanet("Mars", terrestrialGeometry, "assets/planets/mars.jpg");
+    createPlanet("Jupiter", gasGiantGeometry, "assets/planets/jupiter.jpg");
+    createPlanet("Saturn", gasGiantGeometry, "assets/planets/saturn.jpg");
+    createPlanet("Neptune", gasGiantGeometry, "assets/planets/neptune.jpg");
+    createPlanet("Uranus", gasGiantGeometry, "assets/planets/uranus.jpg");
+}
+
+function createPlanet(name, geometry, filePath){
     var loader = new THREE.TextureLoader();
     loader.load(
         filePath,
@@ -55,12 +58,10 @@ function createPlanet(name, color, geometry, filePath){
             material = new THREE.MeshBasicMaterial( {
                 map: texture
              } );
-            console.log("I am creating the mesh for " + name);
             var planet = new THREE.Mesh( geometry, material );
             planets.push(planet);
             planetNames.push(name);
             scene.add(planet);
-            console.log(name + " position: ");
             console.log(planet.position);
             positionPlanet(planet, name);
         },
@@ -70,12 +71,6 @@ function createPlanet(name, color, geometry, filePath){
             console.error( 'An error happened.' );
         }
     );
-//    var material = new THREE.MeshBasicMaterial( { color: color } );
-//    planet = new THREE.Mesh( geometry, material );
-//    planets.push(planet);
-//    planetNames.push(name);
-//    scene.add(planet);
-    console.log("createPlanet complete!");
 }
 
 function animate() {
@@ -96,6 +91,12 @@ var initialx = -6;
 function positionPlanet(planet, name){
     if(name == "Sun"){
         planet.position.set(0, 0, -50);
+        sunlight = new THREE.PointLight( 0xff0000, 1, 100 );
+        sunlight.position.copy(planets[0].position);
+        scene.add(sunlight);
+    }
+    if(name == "Mercury"){
+        planet.position.set(-6, 0, -50);
     }
     else{
         console.log("Planet name: " + name);
@@ -110,11 +111,11 @@ function positionPlanet(planet, name){
 }
 
 initScene();
+initLights();
 init();
 animate();
 
 function centerSun(){
-    console.log("Hello! 1");
     camera.position.set(
         0,
         0,
@@ -125,7 +126,6 @@ function centerSun(){
 }
 
 function centerMercury(){
-    console.log("Hello! 2");
     camera.position.set(
         planets[1].position.x,
         planets[1].position.y,
@@ -136,7 +136,6 @@ function centerMercury(){
 }
 
 function centerVenus(){
-    console.log("Hello! 2");
     camera.position.set(
         planets[2].position.x,
         planets[2].position.y,
@@ -147,7 +146,6 @@ function centerVenus(){
 }
 
 function centerEarth(){
-    console.log("Hello! 2");
     camera.position.set(
         planets[3].position.x,
         planets[3].position.y,
@@ -158,7 +156,6 @@ function centerEarth(){
 }
 
 function centerMars(){
-    console.log("Hello! 3");
     camera.position.set(
         planets[4].position.x,
         planets[4].position.y,
@@ -169,7 +166,6 @@ function centerMars(){
 }
 
 function centerJupiter(){
-    console.log("Hello! 2");
     camera.position.set(
         planets[5].position.x,
         planets[5].position.y,
@@ -180,7 +176,6 @@ function centerJupiter(){
 }
 
 function centerSaturn(){
-    console.log("Hello! 4");
     camera.position.set(
         planets[6].position.x,
         planets[6].position.y,
@@ -191,7 +186,6 @@ function centerSaturn(){
 }
 
 function centerUranus(){
-    console.log("Hello! 2");
     camera.position.set(
         planets[7].position.x,
         planets[7].position.y,
@@ -202,7 +196,6 @@ function centerUranus(){
 }
 
 function centerNeptune(){
-    console.log("Hello! 5");
     camera.position.set(
         planets[8].position.x,
         planets[8].position.y,
