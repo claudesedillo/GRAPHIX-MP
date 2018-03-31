@@ -1,6 +1,5 @@
-var planets = [];
 var scene = new THREE.Scene();
-var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 1, 10000 );
 
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
@@ -21,21 +20,17 @@ var earthMaterial = new THREE.MeshBasicMaterial( { color: 0x3761bf } );
 var jupiterMaterial = new THREE.MeshBasicMaterial( { color: 0xf4d07f } );
 var saturnMaterial = new THREE.MeshBasicMaterial( { color: 0xffa700 } );
 
+var marsMaterial;
+var marsGeometry = new THREE.SphereGeometry(1, 32, 16);
 var loader = new THREE.TextureLoader();
+ 
 loader.load(
-	'assets/mars/mars.jpg',
+	'assets/mars/mars.json',
 	function ( texture ) {
 		// in this example we create the material when the texture is loaded
-		marsMaterial = new THREE.MeshBasicMaterial( {
+		var marsMaterials = new THREE.MeshBasicMaterial( {
 			map: texture
 		 } );
-        var terrestrialSphereGeometry = new THREE.SphereGeometry(0.5, 32, 16);
-        var mars = new THREE.Mesh( terrestrialSphereGeometry, marsMaterial );
-        planets.push(mars);
-        scene.add(mars);
-        mars.position.set(0, 0, -1);
-        var quaternion = new THREE.Quaternion().setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), 23.5 );
-        mars.rotation = new THREE.Euler().setFromQuaternion( quaternion );
 	},
 
 	undefined,
@@ -46,23 +41,25 @@ loader.load(
 
 var mercuryCube = new THREE.Mesh( terrestrialGeometry, mercuryMaterial );
 var earthCube = new THREE.Mesh( terrestrialGeometry, earthMaterial );
+var marsCube = new THREE.Mesh( marsGeometry, marsMaterial );
 var jupiterCube = new THREE.Mesh( gasGiantGeometry, jupiterMaterial );
 var saturnCube = new THREE.Mesh( gasGiantGeometry, saturnMaterial );
             
 scene.add( mercuryCube );
 scene.add( earthCube );
+scene.add( marsCube );
 scene.add( jupiterCube );
 scene.add( saturnCube );
-       
+            
+         
 mercuryCube.position.set(0, 0, -4);
 earthCube.position.set(1, 0, -2);
+marsCube.position.set(1.4, 0, -3);
 jupiterCube.position.set(1.4, 0, -3);
 saturnCube.position.set(-1.5, 0, -7);
             
 console.log("Camera position: ");
 console.log(camera.position);
-
-
 
 console.log("Sun position: ");
 console.log(sunCube.position);
@@ -72,7 +69,10 @@ console.log(mercuryCube.position);
             
 console.log("Earth position: ");
 console.log(earthCube.position);
-        
+
+console.log("Mars position: ");
+console.log(marsCube.position);
+
 console.log("Jupiter position: ");
 console.log(jupiterCube.position);
             
@@ -88,7 +88,7 @@ var animate = function () {
     earthCube.rotation.y += 0.1;
     jupiterCube.rotation.y += 0.1;
     saturnCube.rotation.y += 0.1;
-    planets[0].rotateOnAxis( new THREE.Vector3( 0, 1, 0 ), 0.05 );
+                
     renderer.render(scene, camera);
 };
 
