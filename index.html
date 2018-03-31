@@ -1,46 +1,25 @@
 <html>
-	<head>
-		<title>Planets</title>
-		<style>
-			body { margin: 0; }
-			canvas { width: 100%; height: 100% }
-		</style>
-	</head>
-	<body>
-		<script src="script/three.js"></script>
-		<script>
-			var scene = new THREE.Scene();
-			var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+    <head>
+    </head>
+    <body>
 
-			var renderer = new THREE.WebGLRenderer();
-			renderer.setSize( window.innerWidth, window.innerHeight );
-			document.body.appendChild( renderer.domElement );
-
-			var sunGeometry = new THREE.BoxGeometry( 1, 1, 1 );
-			var sunMaterial = new THREE.MeshBasicMaterial( { color: 0xf5fd1c } );
-			var sunCube = new THREE.Mesh( sunGeometry, sunMaterial );
-			scene.add( sunCube );
-            sunCube.position.set(0, 0, -5);
-            
-            var planetGeometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
-            
-			var mercuryMaterial = new THREE.MeshBasicMaterial( { color: 0x725e31 } );
-			var mercuryCube = new THREE.Mesh( planetGeometry, mercuryMaterial );
-			scene.add( mercuryCube );
-			mercuryCube.position.set(0, 0, -4);
-
-            console.log(sunCube.position);
-            
-			var animate = function () {
-				requestAnimationFrame( animate );
-
-				sunCube.rotation.y += 0.1;
-                mercuryCube.rotation.y += 0.1;
-                
-				renderer.render(scene, camera);
-			};
-
-			animate();
-		</script>
-	</body>
+<!--
+        <button onClick="centerSun()">Sun</button>
+        <button onClick="centerMercury()">Mercury</button>
+        <button onClick="centerVenus()">Venus</button>
+        <button onClick="centerEarth()">Earth</button>
+        <button onClick="centerMars()">Mars</button>
+        <button onClick="centerJupiter()">Jupiter</button>
+        <button onClick="centerSaturn()">Saturn</button>
+        <button onClick="centerNeptune()">Neptune</button>
+        <button onClick="centerUranus()">Uranus</button>
+        
+        <script src = "script/three.js"></script>
+        <script src = "script/OrbitControls.js"></script>
+        <script src = "planets.js"></script>
+-->
+        <script src = "script/three.js"></script>
+        <script src = "script/OrbitControls.js"></script>
+        <script src = "example.js"></script>
+    </body>
 </html>

@@ -1,0 +1,9 @@
+- Import planet textures to threejs
+- Make planets rotate
+- Make planets revolve around the sun
+- Configure proper lighting
+- Make camera follow planet
+
+- Import moon textures to threejs
+- Make moons revolve around planets
+- Make camera follow moon
