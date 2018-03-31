@@ -1,14 +1,10 @@
 var planets = [];
-
+var planetNames = [];
 var scene = new THREE.Scene();
 var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 1, 10000 );
 var renderer = new THREE.WebGLRenderer();
 renderer.setSize( window.innerWidth, window.innerHeight );
 document.body.appendChild( renderer.domElement );
-
-
-var controls = new THREE.OrbitControls(camera, renderer.domElement);
-camera.position.set(0, 1, 0);
 
 var terrestrialGeometry = new THREE.SphereGeometry(0.5, 32, 16);
 var sunGeometry = new THREE.SphereGeometry(3, 32, 16);
@@ -23,18 +19,19 @@ createPlanet("Jupiter", 0xaf7b3e, gasGiantGeometry);
 createPlanet("Saturn", 0xf8f021, gasGiantGeometry);
 createPlanet("Neptune", 0x2129ef, gasGiantGeometry);
 createPlanet("Uranus", 0x31ffff, gasGiantGeometry);
-
+console.log("camera is at");
+console.log(camera.position);
 function createPlanet(name, color, geometry){
     var material = new THREE.MeshBasicMaterial( { color: color } );
     planet = new THREE.Mesh( geometry, material );
     planets.push(planet);
+    planetNames.push(name);
     scene.add(planet);
 }
 
 function animate() {
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
-    console.log(camera.position);
 }
 
 function positionPlanets(){
@@ -46,6 +43,7 @@ function positionPlanets(){
     var initialx = -6;
     
     for(var i = 1; i < 9; i++){
+        console.log("Planet name: " + planetNames[i]);
         planets[i].position.set(initialx, 0, initialpos);
         console.log("position: ");
         console.log(planets[i].position); 
