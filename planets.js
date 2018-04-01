@@ -30,23 +30,52 @@ function initScene(){
     document.body.appendChild( renderer.domElement );
 }
 
-var terrestrialGeometry = new THREE.SphereGeometry(0.5, 32, 16);
-var sunGeometry = new THREE.SphereGeometry(3, 32, 16);
-var gasGiantGeometry = new THREE.SphereGeometry(1, 32, 16);
+var terrestrialGeometry = new THREE.SphereGeometry(0.5, 32, 32);
+var sunGeometry = new THREE.SphereGeometry(3, 32, 32);
+var gasGiantGeometry = new THREE.SphereGeometry(1, 32, 32);
 
 function initLights(){
-    createPlanet("Sun", sunGeometry, "assets/planets/sun.jpg");
+    createSun("Sun", "assets/planets/map/sun.jpg");
 }
 
 function init(){
-    createPlanet("Mercury", terrestrialGeometry, "assets/planets/mercury.jpg");
-    createPlanet("Venus", terrestrialGeometry, "assets/planets/venus.jpg");
-    createPlanet("Earth", terrestrialGeometry, "assets/planets/earth.jpg");
-    createPlanet("Mars", terrestrialGeometry, "assets/planets/mars.jpg");
-    createPlanet("Jupiter", gasGiantGeometry, "assets/planets/jupiter.jpg");
-    createPlanet("Saturn", gasGiantGeometry, "assets/planets/saturn.jpg");
-    createPlanet("Neptune", gasGiantGeometry, "assets/planets/neptune.jpg");
-    createPlanet("Uranus", gasGiantGeometry, "assets/planets/uranus.jpg");
+    createTerrestrialPlanet("Mercury", "assets/planets/map/mercury.jpg", "assets/planets/bump/mercurybump.jpg");
+    createTerrestrialPlanet("Venus", "assets/planets/map/venus.jpg", "assets/planets/bump/mercurybump.jpg");
+    createTerrestrialPlanet("Earth", "assets/planets/map/earth.jpg", "assets/planets/bump/mercurybump.jpg");
+    createTerrestrialPlanet("Mars", "assets/planets/map/mars.jpg", "assets/planets/bump/mercurybump.jpg");
+//    createPlanet("Jupiter", "assets/planets/map/jupiter.jpg");
+//    createPlanet("Saturn", "assets/planets/map/saturn.jpg");
+//    createPlanet("Neptune", "assets/planets/map/neptune.jpg");
+//    createPlanet("Uranus", "assets/planets/map/uranus.jpg");
+}
+
+function createSun(name, mapURL){
+	var texture	= THREE.ImageUtils.loadTexture(mapURL);
+	var material	= new THREE.MeshBasicMaterial( {
+                map: texture
+    } );
+	var planet	= new THREE.Mesh(sunGeometry, material);
+    planets.push(planet);
+    planetNames.push(name);
+    scene.add(planet);
+    positionPlanet(planet, name);   
+}
+
+function createTerrestrialPlanet(name, mapURL, bumpMapURL){
+	var material	= new THREE.MeshPhongMaterial({
+		map	: THREE.ImageUtils.loadTexture(mapURL),
+		bumpMap	: THREE.ImageUtils.loadTexture(bumpMapURL),
+		bumpScale: 0.005,
+	})
+	var planet	= new THREE.Mesh(terrestrialGeometry, material)
+    planets.push(planet);
+    planetNames.push(name);
+    scene.add(planet);
+    positionPlanet(planet, name);
+}
+
+function createGasGiant(){
+    
 }
 
 function createPlanet(name, geometry, filePath){
@@ -91,7 +120,7 @@ var initialx = -6;
 function positionPlanet(planet, name){
     if(name == "Sun"){
         planet.position.set(0, 0, -50);
-        sunlight = new THREE.PointLight( 0xff0000, 1, 100 );
+        sunlight = new THREE.PointLight( 0xFDB813, 1, 100 );
         sunlight.position.copy(planets[0].position);
         scene.add(sunlight);
     }
