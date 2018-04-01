@@ -1,9 +1,11 @@
-- Import planet textures to threejs
-- Make planets rotate
+(DONE) Import planet textures to threejs
+- Make planets rotate on axis
 - Make planets revolve around the sun
-- Configure proper lighting
+(DONE) Configure proper lighting
 - Make camera follow planet
 
 - Import moon textures to threejs
 - Make moons revolve around planets
 - Make camera follow moon
+
+- Convert to KSP planets and moons
