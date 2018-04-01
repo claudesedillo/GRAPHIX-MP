@@ -43,10 +43,10 @@ function init(){
     createTerrestrialPlanet("Venus", "assets/planets/map/venus.jpg", "assets/planets/bump/mercurybump.jpg");
     createTerrestrialPlanet("Earth", "assets/planets/map/earth.jpg", "assets/planets/bump/mercurybump.jpg");
     createTerrestrialPlanet("Mars", "assets/planets/map/mars.jpg", "assets/planets/bump/mercurybump.jpg");
-//    createPlanet("Jupiter", "assets/planets/map/jupiter.jpg");
-//    createPlanet("Saturn", "assets/planets/map/saturn.jpg");
-//    createPlanet("Neptune", "assets/planets/map/neptune.jpg");
-//    createPlanet("Uranus", "assets/planets/map/uranus.jpg");
+    createGasGiant("Jupiter", "assets/planets/map/jupiter.jpg");
+    createGasGiant("Saturn", "assets/planets/map/saturn.jpg");
+    createGasGiant("Neptune", "assets/planets/map/neptune.jpg");
+    createGasGiant("Uranus", "assets/planets/map/uranus.jpg");
 }
 
 function createSun(name, mapURL){
@@ -74,8 +74,18 @@ function createTerrestrialPlanet(name, mapURL, bumpMapURL){
     positionPlanet(planet, name);
 }
 
-function createGasGiant(){
-    
+function createGasGiant(name, mapURL){
+	var texture	= THREE.ImageUtils.loadTexture(mapURL)
+	var material	= new THREE.MeshPhongMaterial({
+		map	: texture,
+		bumpMap	: texture,
+		bumpScale: 0.02,
+	})
+	var planet	= new THREE.Mesh(gasGiantGeometry, material)
+    planets.push(planet);
+    planetNames.push(name);
+    scene.add(planet);
+    positionPlanet(planet, name);
 }
 
 function createPlanet(name, geometry, filePath){
@@ -112,6 +122,7 @@ function animate() {
     renderer.clear();
     renderer.render(backgroundScene , backgroundCamera );
     renderer.render(scene, camera);
+    //console.log(planets.length);
 }
 
 var initialpos = -45;
@@ -120,7 +131,7 @@ var initialx = -6;
 function positionPlanet(planet, name){
     if(name == "Sun"){
         planet.position.set(0, 0, -50);
-        sunlight = new THREE.PointLight( 0xFDB813, 1, 100 );
+        sunlight = new THREE.PointLight( 0xFDB813, 3);
         sunlight.position.copy(planets[0].position);
         scene.add(sunlight);
     }
