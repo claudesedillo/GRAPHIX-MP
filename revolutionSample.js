@@ -71,7 +71,7 @@ function init() {
   createPlanet("Uranus", 1.75, 80, 0.4);
   createPlanet("Neptune", 0.8, 90, 0.2);
 
-  //console.log(planets[0].children[0]);
+  console.log(planets[0].children[0]);
 
   var sun = new THREE.Mesh(new THREE.SphereGeometry(5, 32, 16), new THREE.MeshBasicMaterial({
     color: "gold"

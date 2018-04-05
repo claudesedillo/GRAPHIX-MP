@@ -1,0 +1,119 @@
+<html>
+	<head>
+		<title>3 Spheres, 1 Light source</title>
+		<style>
+			body { margin: 0; }
+			canvas { width: 100%; height: 100% }
+		</style>
+	</head>
+	<body>
+		<script src="js/three.js"></script>
+		<script>
+			var scene = new THREE.Scene();
+			
+
+			var renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+
+                        
+                        //----- GEOMETRY -----
+                        var geometry = new THREE.SphereGeometry( 2, 64, 64 );
+			
+
+                        //----- MATERIAL -----
+                        // k_d is the diffuse coefficient constant 
+                        //    in threejs k_d corresponds to the color parameter (0 to 255 or 0 to 0xff)
+                        //    in the setting below: k_d (red) is 0xff, k_d (green) is 0xff and k_d (blue) is 0xff
+                        // 
+                        // k_s is the specular material coefficient constant
+                        //    in threejs k_d corresponds the the specular parameter (0 to 255)
+                        //    just like k_d, k_s would have three channels (red, green, blue)
+                        //
+                        // alpha is the shininess factor
+                        //    in threejs alpha corresponds to shininess parameter (0 to 100)
+                        //    the default value is 30
+                        var white_material = new THREE.MeshPhongMaterial( { color: 0xffffff, 
+                                                                            specular: 0xffffff, 
+                                                                            shininess: 5, 
+                                                                            flatShading: false } );	
+	
+
+                        //---- MESH -----
+                        var sphere1 = new THREE.Mesh( geometry, white_material );
+			scene.add( sphere1 );
+                        sphere1.position.set(-6, 0, 0); 
+
+                      
+                        var sphere2 = new THREE.Mesh( geometry, white_material );
+			scene.add( sphere2 );
+                        // sphere2.position.set(0, 0, 0); 
+
+
+                        var sphere3 = new THREE.Mesh( geometry, white_material );
+			scene.add( sphere3 );
+                        sphere3.position.set(6, 0, 0); 
+
+
+                        //----- LIGHT(S) ----- 
+                        red_pointlight = new THREE.PointLight( 0xff0000, 1.0 );
+                        red_pointlight.position.set(-6, 6, 0);
+                        scene.add( red_pointlight );
+              
+
+			green_pointlight = new THREE.PointLight( 0x00ff00, 1.0 );
+                       // green_pointlight.position.set(-6, 6, 0);
+                        scene.add( green_pointlight );
+
+                        blue_pointlight = new THREE.PointLight( 0x0000ff, 1.0 );
+                        blue_pointlight.position.set(6, 6, 0);
+                        scene.add( blue_pointlight );
+ 
+
+
+                            // the next three lines are not needed all the time
+                            // we want to visualize the point light source in this sample program
+                            var sphereSize = 0.1;
+                            var red_pointLightHelper = new THREE.PointLightHelper( red_pointlight, sphereSize );
+                            scene.add( red_pointLightHelper );
+
+                            var green_pointLightHelper = new THREE.PointLightHelper( green_pointlight, sphereSize );
+                            scene.add( green_pointLightHelper );
+
+                            var blue_pointLightHelper = new THREE.PointLightHelper( blue_pointlight, sphereSize );
+                            scene.add( blue_pointLightHelper );
+
+
+                        //----- CAMERA -----
+                        //var camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+
+                        
+                        var camera = new THREE.OrthographicCamera( -10, 10, 10, -10, -20, 20 );
+
+                        scene.add( camera );
+                        camera.position.z = 12; // 8;
+
+          
+                        //----- ACTION! -----
+                        var radius = 10;
+                        var theta = 0;  // rotation angle in degrees    
+                              
+			var animate = function () {
+				requestAnimationFrame( animate );
+                                
+				                               
+                                // rotate the light source about the y axis
+                                green_pointlight.position.x = radius * Math.cos(theta * Math.PI/180);
+                                green_pointlight.position.y = 0; 
+                                green_pointlight.position.z = radius * Math.sin(theta * Math.PI/180);
+
+                                theta = (theta + 1) % 360;              
+
+				renderer.render(scene, camera);
+			};
+
+			animate();
+		</script>
+	</body>
+</html>
