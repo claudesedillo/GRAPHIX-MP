@@ -14,8 +14,8 @@ function initScene(){
     backgroundScene = new THREE.Scene();
     backgroundCamera = new THREE.Camera();
 
-//    ambientLight = new THREE.AmbientLight(0xFFFFFF);
-//    scene.add(ambientLight);
+    ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.001);
+    scene.add(ambientLight);
     
     controls = new THREE.OrbitControls(camera);
     controls.target.set( 0, 0, 0 );
