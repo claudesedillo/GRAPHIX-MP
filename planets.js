@@ -48,14 +48,14 @@ function initLights(){
 }
 
 function init(){
-    createTerrestrialPlanet("Mercury", "assets/planets/map/mercury.jpg", "assets/planets/bump/mercurybump.jpg", 20, 5);
-    createTerrestrialPlanet("Venus", "assets/planets/map/venus.jpg", "assets/planets/bump/mercurybump.jpg", 40, 3);
-    createTerrestrialPlanet("Earth", "assets/planets/map/earth.jpg", "assets/planets/bump/mercurybump.jpg", 60, 4);
-    createTerrestrialPlanet("Mars", "assets/planets/map/mars.jpg", "assets/planets/bump/mercurybump.jpg", 80, 2);
-    createGasGiant("Jupiter", "assets/planets/map/jupiter.jpg", 100, 0.8);
-    createGasGiant("Saturn", "assets/planets/map/saturn.jpg", 120, 0.5);
-    createGasGiant("Neptune", "assets/planets/map/neptune.jpg", 130, 0.4);
-    createGasGiant("Uranus", "assets/planets/map/uranus.jpg", 140, 0.2);
+    createTerrestrialPlanet("Mercury", "assets/planets/map/mercury.jpg", "assets/planets/bump/mercurybump.jpg", 40, 3);
+    createTerrestrialPlanet("Venus", "assets/planets/map/venus.jpg", "assets/planets/bump/mercurybump.jpg", 80, 2);
+    createTerrestrialPlanet("Earth", "assets/planets/map/earth.jpg", "assets/planets/bump/mercurybump.jpg", 120, 1);
+    createTerrestrialPlanet("Mars", "assets/planets/map/mars.jpg", "assets/planets/bump/mercurybump.jpg", 160, 0.5);
+    createGasGiant("Jupiter", "assets/planets/map/jupiter.jpg", 220, 0.4);
+    createGasGiant("Saturn", "assets/planets/map/saturn.jpg", 260, 0.2);
+    createGasGiant("Neptune", "assets/planets/map/neptune.jpg", 300, 0.1);
+    createGasGiant("Uranus", "assets/planets/map/uranus.jpg", 320, 0.08);
 }
 
 function createSun(){
@@ -82,8 +82,8 @@ function createTerrestrialPlanet(name, mapURL, bumpMapURL, orbit, speed){
     planet.orbit = orbit;
     planet.speed = speed;
     
+    createOrbit(orbit);    
     scene.add(planet);
-    positionPlanet(planet);
 }
 
 function createGasGiant(name, mapURL, orbit, speed){
@@ -100,10 +100,22 @@ function createGasGiant(name, mapURL, orbit, speed){
     planet.orbit = orbit;
     planet.speed = speed;
     
+    createOrbit(orbit);
     scene.add(planet);
-    positionPlanet(planet);
 }
 
+function createOrbit(orbit){
+    //orbit
+    var shape = new THREE.Shape();
+    shape.moveTo(orbit, 0);
+    shape.absarc(0, 0, orbit, 0, 2 * Math.PI, false);
+    var spacedPoints = shape.createSpacedPointsGeometry(128);
+    spacedPoints.rotateX(THREE.Math.degToRad(-90));
+    var orbit = new THREE.Line(spacedPoints, new THREE.LineBasicMaterial({
+      color: "white"
+    }));
+    scene.add(orbit);
+}
 function animate() {
     requestAnimationFrame(animate);
     sun.rotation.y += 0.01
