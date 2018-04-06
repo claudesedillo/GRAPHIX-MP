@@ -18,7 +18,7 @@ function initScene(){
     scene.add(ambientLight);
     
     controls = new THREE.OrbitControls(camera);
-    controls.target.set( 0, 0, 0 );
+    camera.position.set(0, 0, 10);
     controls.update();
     
     texture = THREE.ImageUtils.loadTexture( 'assets/backgrounds/galaxy_starfield.png' );
@@ -48,14 +48,14 @@ function initLights(){
 }
 
 function init(){
-    createTerrestrialPlanet("Mercury", "assets/planets/map/mercury.jpg", "assets/planets/bump/mercurybump.jpg");
-    createTerrestrialPlanet("Venus", "assets/planets/map/venus.jpg", "assets/planets/bump/mercurybump.jpg");
-    createTerrestrialPlanet("Earth", "assets/planets/map/earth.jpg", "assets/planets/bump/mercurybump.jpg");
-    createTerrestrialPlanet("Mars", "assets/planets/map/mars.jpg", "assets/planets/bump/mercurybump.jpg");
-    createGasGiant("Jupiter", "assets/planets/map/jupiter.jpg");
-    createGasGiant("Saturn", "assets/planets/map/saturn.jpg");
-    createGasGiant("Neptune", "assets/planets/map/neptune.jpg");
-    createGasGiant("Uranus", "assets/planets/map/uranus.jpg");
+    createTerrestrialPlanet("Mercury", "assets/planets/map/mercury.jpg", "assets/planets/bump/mercurybump.jpg", 20, 5);
+    createTerrestrialPlanet("Venus", "assets/planets/map/venus.jpg", "assets/planets/bump/mercurybump.jpg", 40, 3);
+    createTerrestrialPlanet("Earth", "assets/planets/map/earth.jpg", "assets/planets/bump/mercurybump.jpg", 60, 4);
+    createTerrestrialPlanet("Mars", "assets/planets/map/mars.jpg", "assets/planets/bump/mercurybump.jpg", 80, 2);
+    createGasGiant("Jupiter", "assets/planets/map/jupiter.jpg", 100, 0.8);
+    createGasGiant("Saturn", "assets/planets/map/saturn.jpg", 120, 0.5);
+    createGasGiant("Neptune", "assets/planets/map/neptune.jpg", 130, 0.4);
+    createGasGiant("Uranus", "assets/planets/map/uranus.jpg", 140, 0.2);
 }
 
 function createSun(){
@@ -69,7 +69,7 @@ function createSun(){
     positionSun();   
 }
 
-function createTerrestrialPlanet(name, mapURL, bumpMapURL){
+function createTerrestrialPlanet(name, mapURL, bumpMapURL, orbit, speed){
 	var material	= new THREE.MeshPhongMaterial({
 		map	: THREE.ImageUtils.loadTexture(mapURL),
 		bumpMap	: THREE.ImageUtils.loadTexture(bumpMapURL),
@@ -77,12 +77,16 @@ function createTerrestrialPlanet(name, mapURL, bumpMapURL){
 	})
 	var planet	= new THREE.Mesh(terrestrialGeometry, material)
     planets.push(planet);
+    
     planet.name = name;
+    planet.orbit = orbit;
+    planet.speed = speed;
+    
     scene.add(planet);
     positionPlanet(planet);
 }
 
-function createGasGiant(name, mapURL){
+function createGasGiant(name, mapURL, orbit, speed){
 	var texture	= THREE.ImageUtils.loadTexture(mapURL)
 	var material	= new THREE.MeshPhongMaterial({
 		map	: texture,
@@ -91,16 +95,39 @@ function createGasGiant(name, mapURL){
 	})
 	var planet	= new THREE.Mesh(gasGiantGeometry, material)
     planets.push(planet);
+    
     planet.name = name;
+    planet.orbit = orbit;
+    planet.speed = speed;
+    
     scene.add(planet);
     positionPlanet(planet);
 }
 
 function animate() {
     requestAnimationFrame(animate);
+    sun.rotation.y += 0.01
     
     planets.forEach(function(planet) {
-        planet.rotation.y += 0.01;
+        timestamp = Date.now() * 0.0001;
+        var orbit = planet.orbit;
+        var speed = planet.speed;
+        planet.position.x = Math.sin(timestamp * speed) * orbit;
+        planet.position.z = Math.cos(timestamp * speed) * orbit;
+        
+        if(planet.name == "Venus"){
+            planet.rotation.y -= 0.01;
+            planet.position.x = Math.cos(timestamp * speed) * orbit;
+            planet.position.z = Math.sin(timestamp * speed) * orbit;
+        }
+        else if(planet.name == "Uranus"){
+            planet.rotation.x += 0.01;
+            planet.position.x = Math.cos(timestamp * speed) * orbit;
+            planet.position.z = Math.sin(timestamp * speed) * orbit;
+        }
+        else{
+            planet.rotation.y += 0.01;
+        }
     });
     renderer.autoClear = false;
     renderer.clear();
@@ -110,25 +137,22 @@ function animate() {
     //console.log(camera.position);
 }
 
-var initialpos = -45;
-var initialx = -6;
+var initialz = 10;
+var initialx = 10;
 
 function positionSun(){
-    sun.position.set(0, 0, -50);
+    sun.position.set(0, 0, 0);
     sunlight = new THREE.PointLight( 0xFDB813, 3, 0, 2);
     sunlight.position.copy(sun.position);
     scene.add(sunlight);
 }
 
 function positionPlanet(planet){
-    if(planet.name == "Mercury"){
-        planet.position.set(-6, 0, -50);
-    }
-    else{
-        planet.position.set(initialx, 0, initialpos);
-        initialpos += 10;
-        initialx += 2;
-    }
+    planet.position.set(initialx, 0, initialz);
+    initialz += 10;
+    initialx -= 10;
+    console.log(planet.name + ":");
+    console.log(planet.position);
 }
 
 initScene();
