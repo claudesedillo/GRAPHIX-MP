@@ -20,6 +20,7 @@ function initScene(){
     
     controls = new THREE.OrbitControls(camera);
     camera.position.set(0, 0, 10);
+    camera.lookAt(new THREE.Vector3(0,0,0));
     controls.update();
     
     var starSphere	= THREEx.Planets.createStarfield()
@@ -80,7 +81,9 @@ function createTerrestrialPlanet(name, mapURL, bumpMapURL, orbit, speed){
 		bumpScale: 0.005,
 	})
 	var planet	= new THREE.Mesh(terrestrialGeometry, material);
-    
+    if(name == "Earth"){
+        planet.lookAt(0, 23.5, 0);
+    }
     planet.name = name;
     planet.orbit = orbit;
     planet.speed = speed;
@@ -110,7 +113,6 @@ function createGasGiant(name, mapURL, orbit, speed){
 
 function createRingedPlanet(name, orbit, speed){
     var planet
-    var ring
     
     if(name == "Saturn"){
        planet	= THREEx.Planets.createSaturn()
@@ -119,6 +121,7 @@ function createRingedPlanet(name, orbit, speed){
        var ring	= THREEx.Planets.createSaturnRing()
        ring.receiveShadow	= true
        ring.castShadow		= true
+       planet.add(ring)
     }
     else{
         var planet	= THREEx.Planets.createUranus()
@@ -173,7 +176,7 @@ function animate() {
 //            planet.position.z = Math.sin(timestamp * speed) * orbit;
         }
         else if(planet.name == "Uranus"){
-            planet.rotation.x += 0.01;
+            planet.rotation.z += 0.01;
 //            planet.position.x = Math.cos(timestamp * speed) * orbit;
 //            planet.position.z = Math.sin(timestamp * speed) * orbit;
         }
@@ -181,9 +184,7 @@ function animate() {
             planet.rotation.y += 0.01;
         }
     });
-    renderer.autoClear = false;
-    renderer.clear();
-    renderer.render(backgroundScene , backgroundCamera );
+    
     renderer.render(scene, camera);
     controls.update();
     //console.log(camera.position);
@@ -214,92 +215,86 @@ initLights();
 init();
 animate();
 
+//https://stackoverflow.com/questions/30918864/orbit-camera-lookat-change
+
 function centerSun(){
-    camera.lookAt(sun);
+    controls.target.copy(sun.position);
+    camera.position.x = planets[0].position.x - 2.5;
+    camera.position.z = planets[0].position.z + 0.8;
     console.log("Camera position: ");
     console.log(camera.position);
 }
 
 function centerMercury(){
-    camera.position.set(
-        planets[0].position.x,
-        planets[0].position.y,
-        planets[0].position.z -2
-    );
+    controls.target.copy(planets[0].position);
+    camera.position.x = planets[0].position.x - 2.5;
+    camera.position.z = planets[0].position.z + 0.8;
     console.log("Camera position: ");
     console.log(camera.position);
+    console.log("Mercury position:");
+    console.log(planets[0].position);
 }
 
 function centerVenus(){
-    camera.position.set(
-        planets[1].position.x,
-        planets[1].position.y,
-        planets[1].position.z +2
-    );
+    controls.target.copy(planets[1].position);
+    camera.position.x = planets[1].position.x - 2.5;
+    camera.position.z = planets[1].position.z + 0.8;
     console.log("Camera position: ");
     console.log(camera.position);
 }
 
 function centerEarth(){
-    camera.position.set(
-        planets[2].position.x,
-        planets[2].position.y,
-        planets[2].position.z +2
-    );
+    controls.target.copy(planets[2].position);
+    camera.position.x = planets[2].position.x - 2.5;
+    camera.position.z = planets[2].position.z + 0.8;
     console.log("Camera position: ");
     console.log(camera.position);
 }
 
 function centerMars(){
-    camera.position.set(
-        planets[3].position.x,
-        planets[3].position.y,
-        planets[3].position.z +2
-    );
+    controls.target.copy(planets[3].position);
+    camera.position.x = planets[3].position.x - 2.5;
+    camera.position.z = planets[3].position.z + 0.8;
     console.log("Camera position: ");
     console.log(camera.position);
 }
 
 function centerJupiter(){
-    camera.position.set(
-        planets[4].position.x,
-        planets[4].position.y,
-        planets[4].position.z +2
-    );
+    controls.target.copy(planets[4].position);
+    camera.position.x = planets[4].position.x - 2.5;
+    camera.position.z = planets[4].position.z + 0.8;
     console.log("Camera position: ");
     console.log(camera.position);
 }
 
 function centerSaturn(){
-    camera.position.set(
-        planets[5].position.x,
-        planets[5].position.y,
-        planets[5].position.z +2
-    );
+    controls.target.copy(planets[5].position);
+    camera.position.x = planets[5].position.x - 2.5;
+    camera.position.z = planets[5].position.z + 0.8;
     console.log("Camera position: ");
     console.log(camera.position);
 }
 
 function centerUranus(){
-    camera.position.set(
-        planets[6].position.x,
-        planets[6].position.y,
-        planets[7].position.z +2
-    );
+    controls.target.copy(planets[6].position);
+    camera.position.x = planets[6].position.x - 2.5;
+    camera.position.z = planets[6].position.z + 0.8;
     console.log("Camera position: ");
     console.log(camera.position);
 }
 
 function centerNeptune(){
-    camera.position.set(
-        planets[7].position.x,
-        planets[7].position.y,
-        planets[7].position.z +2
-    );
+    controls.target.copy(planets[7].position);
+    camera.position.x = planets[7].position.x - 2.5;
+    camera.position.z = planets[7].position.z + 0.8;
     console.log("Camera position: ");
     console.log(camera.position);
 }
 
+function logPosition(){
+    console.log("Camera position: ");
+    console.log(camera.position);
+}
 function disableOrbit(){
     var orbitColor = orbits[0].material.color.getHexString();
     

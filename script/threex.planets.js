@@ -289,7 +289,7 @@ THREEx.Planets.createUranusRing	= function(){
 		opacity		: 0.8,
 	})
 	var mesh	= new THREE.Mesh(geometry, material)
-	mesh.lookAt(new THREE.Vector3(0.5,-4,1))
+	//mesh.lookAt(new THREE.Vector3(0.5,-4,1))
 	return mesh	
 }
 

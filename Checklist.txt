@@ -1,7 +1,8 @@
 (DONE) Import planet textures to threejs
-- Make planets rotate on axis
 (DONE) Make planets revolve around the sun
 (DONE) Configure proper lighting
+
+- Make planets rotate on axis - mesh.lookat
 - Make orbits elliptic
 - Make orbits incline
 - Make camera follow planet
