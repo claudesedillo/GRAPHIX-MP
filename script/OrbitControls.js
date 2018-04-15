@@ -13,6 +13,11 @@
 //    Zoom - middle mouse, or mousewheel / touch: two-finger spread or squish
 //    Pan - right mouse, or arrow keys / touch: two-finger move
 
+function goTo( vector ) {
+    // Cloning given vector since it would be modified otherwise
+    pan.add( vector.clone().sub( this.target ) );
+}
+
 THREE.OrbitControls = function ( object, domElement ) {
 
 	this.object = object;
