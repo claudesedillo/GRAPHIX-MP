@@ -1,4 +1,4 @@
-var planets = [], orbits = [];
+var planets = [], orbits = [], moons = [];
 var sun;
 
 var planetSelected = false;
@@ -21,7 +21,7 @@ function initScene(){
     scene.add(ambientLight);
     
     controls = new THREE.OrbitControls(camera);
-    controls.noPan = true;
+//    controls.noPan = true;
     camera.position.set(0, 0, 10);
     controls.target.set(0,0,0);
     
@@ -43,15 +43,16 @@ function initLights(){
 }
 
 function init(){
-    createTerrestrialPlanet("Mercury", "assets/planets/map/mercury.jpg", "assets/planets/bump/mercurybump.jpg", 40, 3);
-    createTerrestrialPlanet("Venus", "assets/planets/map/venus.jpg", "assets/planets/bump/mercurybump.jpg", 80, 2);
-    createTerrestrialPlanet("Earth", "assets/planets/map/earth.jpg", "assets/planets/bump/mercurybump.jpg", 120, 1);
-    createTerrestrialPlanet("Mars", "assets/planets/map/mars.jpg", "assets/planets/bump/mercurybump.jpg", 160, 0.5);
-    createGasGiant("Jupiter", "assets/planets/map/jupiter.jpg", 220, 0.4);
-    createRingedPlanet("Saturn", 260, 0.2);
-    createRingedPlanet("Uranus", 300, 0.1);
-    createGasGiant("Neptune", "assets/planets/map/neptune.jpg", 350, 0.08);
+    createTerrestrialPlanet("Mercury", "assets/planets/map/mercury.jpg", "assets/planets/bump/mercurybump.jpg", 200, 3);
+    createTerrestrialPlanet("Venus", "assets/planets/map/venus.jpg", "assets/planets/bump/mercurybump.jpg", 350, 2);
+    createTerrestrialPlanet("Earth", "assets/planets/map/earth.jpg", "assets/planets/bump/mercurybump.jpg", 480, 1);
+    createTerrestrialPlanet("Mars", "assets/planets/map/mars.jpg", "assets/planets/bump/mercurybump.jpg", 550, 0.5);
+    createGasGiant("Jupiter", "assets/planets/map/jupiter.jpg", 720, 0.4);
+    createRingedPlanet("Saturn", 830, 0.2);
+    createRingedPlanet("Uranus", 980, 0.1);
+    createGasGiant("Neptune", "assets/planets/map/neptune.jpg", 1080, 0.08);
 
+    createMoon("Moon", )
 }
 
 function createSun(){
@@ -141,7 +142,7 @@ function createOrbit(orbit){
     var spacedPoints = shape.createSpacedPointsGeometry(128);
     spacedPoints.rotateX(THREE.Math.degToRad(-90));
     orbitMaterial = new THREE.LineBasicMaterial( {
-        color: "white",
+        color: "black",
         linewidth: 0.001
     } );
     var orbit = new THREE.Line(spacedPoints, orbitMaterial);
@@ -184,9 +185,9 @@ function animate() {
         camera.position.z = planets[selectedPlanetIndex].position.z + 0.8;
         controls.update();
     }
-    else{
-        controls.target.copy(sun.position);
-    }
+//    else{
+//        controls.target.copy(sun.position);
+//    }
     
     renderer.render(scene, camera);
     controls.update();
@@ -219,7 +220,7 @@ init();
 animate();
 
 //https://stackoverflow.com/questions/30918864/orbit-camera-lookat-change
-
+//https://stackoverflow.com/questions/24855708/how-can-i-apply-trackballcontrols-to-a-moving-target
 function centerSun(){
     controls.target.copy(sun.position);
     camera.position.x = planets[0].position.x - 2.5;

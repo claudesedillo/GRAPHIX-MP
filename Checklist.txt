@@ -1,11 +1,16 @@
 (DONE) Import planet textures to threejs
 (DONE) Make planets revolve around the sun
 (DONE) Configure proper lighting
+(DONE) Make camera follow planet
 
-- Make planets rotate on axis - mesh.lookat
+- Make planets rotate on axis - mesh.lookat (??)
 - Make orbits elliptic
 - Make orbits incline
-- Make camera follow planet
+
+
+- Space engine type where selected planet displays children planets
+
+Moon movement: orbit +/- planet center?
 
 - Import moon textures to threejs
 - Make moons revolve around planets
