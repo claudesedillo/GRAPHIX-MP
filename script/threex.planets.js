@@ -149,7 +149,7 @@ THREEx.Planets.createJupiter	= function(){
 
 THREEx.Planets.createSaturn	= function(){
 	var geometry	= new THREE.SphereGeometry(0.5, 32, 32)
-	var texture	= THREE.ImageUtils.loadTexture(THREEx.Planets.baseURL+'images/saturnmap.jpg')
+	var texture	= THREE.ImageUtils.loadTexture('assets/planets/map/saturn.jpg')
 	var material	= new THREE.MeshPhongMaterial({
 		map	: texture,
 		bumpMap	: texture,
@@ -203,9 +203,9 @@ THREEx.Planets.createSaturnRing	= function(){
 			contextResult.putImageData(dataResult,0,0)	
 			material.map.needsUpdate = true;
 		})
-		imageTrans.src	= THREEx.Planets.baseURL+'images/saturnringpattern.gif';
+		imageTrans.src	= 'assets/rings/saturnringpattern.gif';
 	}, false);
-	imageMap.src	= THREEx.Planets.baseURL+'images/saturnringcolor.jpg';
+	imageMap.src	= 'assets/rings/saturnringcolor.jpg';
 	
 	var geometry	= new THREEx.Planets._RingGeometry(0.55, 0.75, 64);
 	var material	= new THREE.MeshPhongMaterial({
@@ -397,7 +397,6 @@ THREEx.Planets._RingGeometry = function ( innerRadius, outerRadius, thetaSegment
 		this.faceVertexUvs[0].push(uvs);
 	}
 
-	this.computeCentroids();
 	this.computeFaceNormals();
 
 	this.boundingSphere = new THREE.Sphere( new THREE.Vector3(), outerRadius );
