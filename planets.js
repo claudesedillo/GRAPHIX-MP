@@ -22,17 +22,19 @@ function initScene(){
     camera.position.set(0, 0, 10);
     controls.update();
     
-    texture = THREE.ImageUtils.loadTexture( 'assets/backgrounds/galaxy_starfield.png' );
-    backgroundMesh = new THREE.Mesh(
-        new THREE.PlaneGeometry(2, 2, 0),
-        new THREE.MeshBasicMaterial({
-            map: texture
-        }));
-    backgroundMesh.material.depthTest = false;
-    backgroundMesh.material.depthWrite = false;
-    
-    backgroundScene.add(backgroundCamera );
-    backgroundScene.add(backgroundMesh );
+    var starSphere	= THREEx.Planets.createStarfield()
+	scene.add(starSphere)
+//    texture = THREE.ImageUtils.loadTexture( 'assets/backgrounds/galaxy_starfield.png' );
+//    backgroundMesh = new THREE.Mesh(
+//        new THREE.PlaneGeometry(2, 2, 0),
+//        new THREE.MeshBasicMaterial({
+//            map: texture
+//        }));
+//    backgroundMesh.material.depthTest = false;
+//    backgroundMesh.material.depthWrite = false;
+//    
+//    backgroundScene.add(backgroundCamera );
+//    backgroundScene.add(backgroundMesh );
 
     renderer.gammaInput = true;
     renderer.gammaOutput = true;
