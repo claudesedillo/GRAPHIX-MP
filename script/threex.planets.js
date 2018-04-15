@@ -223,7 +223,7 @@ THREEx.Planets.createSaturnRing	= function(){
 
 THREEx.Planets.createUranus	= function(){
 	var geometry	= new THREE.SphereGeometry(0.5, 32, 32)
-	var texture	= THREE.ImageUtils.loadTexture(THREEx.Planets.baseURL+'images/uranusmap.jpg')
+	var texture	= THREE.ImageUtils.loadTexture('assets/planets/map/uranus.jpg')
 	var material	= new THREE.MeshPhongMaterial({
 		map	: texture,
 		bumpMap	: texture,
@@ -276,9 +276,9 @@ THREEx.Planets.createUranusRing	= function(){
 			contextResult.putImageData(dataResult,0,0)	
 			material.map.needsUpdate = true;
 		})
-		imageTrans.src	= THREEx.Planets.baseURL+'images/uranusringtrans.gif';
+		imageTrans.src	= 'assets/rings/uranusringtrans.gif';
 	}, false);
-	imageMap.src	= THREEx.Planets.baseURL+'images/uranusringcolour.jpg';
+	imageMap.src	= 'assets/rings/uranusringcolour.jpg';
 	
 	var geometry	= new THREEx.Planets._RingGeometry(0.55, 0.75, 64);
 	var material	= new THREE.MeshPhongMaterial({

@@ -1,9 +1,10 @@
-var planets = [];
+var planets = [], orbits = [];
 var sun;
 
 var scene, camera, renderer, backgroundScene, backgroundCamera;
 var controls;
 var ambientLight;
+var orbitMaterial;
 
 function initScene(){
     scene = new THREE.Scene();
@@ -27,11 +28,11 @@ function initScene(){
         new THREE.MeshBasicMaterial({
             map: texture
         }));
-    backgroundMesh .material.depthTest = false;
-    backgroundMesh .material.depthWrite = false;
+    backgroundMesh.material.depthTest = false;
+    backgroundMesh.material.depthWrite = false;
     
-    backgroundScene .add(backgroundCamera );
-    backgroundScene .add(backgroundMesh );
+    backgroundScene.add(backgroundCamera );
+    backgroundScene.add(backgroundMesh );
 
     renderer.gammaInput = true;
     renderer.gammaOutput = true;
@@ -53,9 +54,8 @@ function init(){
     createTerrestrialPlanet("Earth", "assets/planets/map/earth.jpg", "assets/planets/bump/mercurybump.jpg", 120, 1);
     createTerrestrialPlanet("Mars", "assets/planets/map/mars.jpg", "assets/planets/bump/mercurybump.jpg", 160, 0.5);
     createGasGiant("Jupiter", "assets/planets/map/jupiter.jpg", 220, 0.4);
-    createSaturn();
-//    createGasGiant("Saturn", "assets/planets/map/saturn.jpg", 260, 0.2);
-    createGasGiant("Uranus", "assets/planets/map/uranus.jpg", 300, 0.1);
+    createRingedPlanet("Saturn", 260, 0.2);
+    createRingedPlanet("Uranus", 300, 0.1);
     createGasGiant("Neptune", "assets/planets/map/neptune.jpg", 350, 0.08);
 
 }
@@ -77,18 +77,16 @@ function createTerrestrialPlanet(name, mapURL, bumpMapURL, orbit, speed){
 		bumpMap	: THREE.ImageUtils.loadTexture(bumpMapURL),
 		bumpScale: 0.005,
 	})
-	var planet	= new THREE.Mesh(terrestrialGeometry, material)
-    planets.push(planet);
+	var planet	= new THREE.Mesh(terrestrialGeometry, material);
     
     planet.name = name;
     planet.orbit = orbit;
     planet.speed = speed;
     
-    createOrbit(orbit);    
+    planets.push(planet);
+    createOrbit(orbit);
     scene.add(planet);
 }
-
-
 
 function createGasGiant(name, mapURL, orbit, speed){
 	var texture	= THREE.ImageUtils.loadTexture(mapURL)
@@ -98,39 +96,45 @@ function createGasGiant(name, mapURL, orbit, speed){
 		bumpScale: 0.02,
 	})
 	var planet	= new THREE.Mesh(gasGiantGeometry, material)
-    planets.push(planet);
     
     planet.name = name;
     planet.orbit = orbit;
     planet.speed = speed;
-    260, 0.2
+    
+    planets.push(planet);
     createOrbit(orbit);
     scene.add(planet);
 }
 
-function createSaturn(){
-    var planet	= THREEx.Planets.createSaturn()
-	planet.receiveShadow	= true
-	planet.castShadow		= true
-	var ring	= THREEx.Planets.createSaturnRing()
-	ring.receiveShadow	= true
-	ring.castShadow		= true
-	planet.add(ring)
+function createRingedPlanet(name, orbit, speed){
+    var planet
+    var ring
     
-    planet.name = "Saturn";
-    planet.orbit = 260;
-    planet.speed = 0.2;
+    if(name == "Saturn"){
+       planet	= THREEx.Planets.createSaturn()
+	   planet.receiveShadow	    = true
+	   planet.castShadow		= true
+       var ring	= THREEx.Planets.createSaturnRing()
+       ring.receiveShadow	= true
+       ring.castShadow		= true
+    }
+    else{
+        var planet	= THREEx.Planets.createUranus()
+        planet.receiveShadow	= true
+        planet.castShadow		= true
+        var ring	= THREEx.Planets.createUranusRing()
+        ring.receiveShadow	= true
+        ring.castShadow		= true
+        planet.add(ring)
+    }
     
-    createOrbit(260);
-    planets.push(planet)
+    planet.name = name;
+    planet.orbit = orbit;
+    planet.speed = speed;
+    
+    planets.push(planet);
+    createOrbit(orbit);
     scene.add(planet);
-}
-function createRing(planet){
-    console.log("I am at createring");
-    var ring	= THREEx.Planets.createSaturnRing();
-    ring.receiveShadow	= true;
-	ring.castShadow		= true;
-	planet.add(ring);
 }
 
 function createOrbit(orbit){
@@ -140,11 +144,15 @@ function createOrbit(orbit){
     shape.absarc(0, 0, orbit, 0, 2 * Math.PI, false);
     var spacedPoints = shape.createSpacedPointsGeometry(128);
     spacedPoints.rotateX(THREE.Math.degToRad(-90));
-    var orbit = new THREE.Line(spacedPoints, new THREE.LineBasicMaterial({
-      color: "white"
-    }));
+    orbitMaterial = new THREE.LineBasicMaterial( {
+        color: "white",
+        linewidth: 0.001
+    } );
+    var orbit = new THREE.Line(spacedPoints, orbitMaterial);
+    orbits.push(orbit);
     scene.add(orbit);
 }
+
 function animate() {
     requestAnimationFrame(animate);
     sun.rotation.y += 0.01
@@ -288,4 +296,17 @@ function centerNeptune(){
     );
     console.log("Camera position: ");
     console.log(camera.position);
+}
+
+function disableOrbit(){
+    var orbitColor = orbits[0].material.color.getHexString();
+    
+    orbits.forEach(function(orbit) {
+        if(orbitColor == "ffffff"){
+            orbit.material.color.setHex(0x000000);
+        }
+        else{
+            orbit.material.color.setHex(0xffffff);
+        }
+    });
 }
