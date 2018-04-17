@@ -1,20 +1,117 @@
 <html>
     <head>
+        <link rel="stylesheet" href="style/index.css">
+        <script type = "text/javascript" src="script/jquery-3.2.1.min.js"></script>
     </head>
     <body style='margin: 0px; background-color: #000000; overflow: hidden;'>
 
-        <button onClick="centerSun()">Sun</button>
-        <button onClick="centerMercury()">Mercury</button>
-        <button onClick="centerVenus()">Venus</button>
-        <button onClick="centerEarth()">Earth</button>
-        <button onClick="centerMoon()">Moon</button>
-        <button onClick="centerMars()">Mars</button>
-        <button onClick="centerJupiter()">Jupiter</button>
-        <button onClick="centerSaturn()">Saturn</button>
-        <button onClick="centerUranus()">Uranus</button>
-        <button onClick="centerNeptune()">Neptune</button>
-        <button onClick="disableOrbit()">Remove orbit</button>
-        <button onClick="logPosition()">Log camera position</button>
+        <button id = "btn-sun" onClick="centerSun()">
+           <img src = "assets/buttons/sunButton.jpg" height="30" width="30"><br>
+            Sun
+        </button>
+        <button id = "btn-mercury" class = 'planet-btn'  onClick="centerMercury()">
+            <img src = "assets/buttons/mercury.png" height="30" width="30"><br>
+            Mercury
+        </button>
+        <button id = "btn-venus" class = 'planet-btn' onClick="centerVenus()">
+            <img src = "assets/buttons/venus.png" height="30" width="30"><br>
+            Venus
+        </button>
+        <button id = "btn-earth" class = 'planet-btn' onClick="centerEarth()">
+            <img src = "assets/buttons/earth.png" height="30" width="30"><br>
+            Earth
+        </button>
+        
+        <button id = "btn-moon" class = "earth-moon moon-btn" hidden onClick="centerMoon()">
+            <img src = "assets/buttons/moon.jpg" height="30" width="30"><br>
+            Moon
+        </button>
+        
+        <button id = "btn-mars" class = 'planet-btn'  onClick="centerMars()">
+            <img src = "assets/buttons/mars.jpg" height="30" width="30"><br>
+            Mars
+        </button>
+        
+        <button id = "btn-phobos" class = "mars-moon moon-btn" hidden onClick="centerPhobos()">
+            <img src = "assets/buttons/phobos.jpg" height="30" width="30"><br>
+            Phobos
+        </button>
+        <button id = "btn-deimos" class = "mars-moon moon-btn" hidden onClick="centerDeimos()">
+            <img src = "assets/buttons/deimos.jpg" height="30" width="30"><br>
+            Deimos
+        </button>
+        
+        <button id = "btn-jupiter" class = 'planet-btn'  onClick="centerJupiter()">
+            <img src = "assets/buttons/jupiter.jpg" height="30" width="30"><br>
+            Jupiter
+        </button>
+        
+        <button id = "btn-callisto" class = "jupiter-moon moon-btn" hidden onClick="centerCallisto()">
+            <img src = "assets/buttons/Callisto.jpg" height="30" width="30"><br>
+            Callisto
+        </button>
+        <button id = "btn-ganymede"  class = "jupiter-moon moon-btn" hidden onClick="centerGanymede()">
+            <img src = "assets/buttons/ganymede.jpg" height="30" width="30"><br>
+            Ganymede
+        </button>
+        <button id = "btn-io" class = "jupiter-moon moon-btn" hidden onClick="centerIo()">
+            <img src = "assets/buttons/io.jpg" height="30" width="30"><br>
+            Io
+        </button>
+        <button id = "btn-europa" class = "jupiter-moon moon-btn" hidden onClick="centerEuropa()">
+            <img src = "assets/buttons/europa.jpg" height="30" width="30"><br>
+            Europa
+        </button>
+        
+        <button id = "btn-saturn" class = 'planet-btn'  onClick="centerSaturn()">
+            <img src = "assets/buttons/saturn.jpg" height="30" width="30"><br>
+            Saturn
+        </button>
+        
+        <button id = "btn-titan" class = "saturn-moon moon-btn" hidden onClick="centerTitan()">
+            <img src = "assets/buttons/titan.jpg" height="30" width="30"><br>
+            Titan
+        </button>
+        <button id = "btn-enceladus" class = "saturn-moon moon-btn" hidden onClick="centerEnceladus()">
+            <img src = "assets/buttons/enceladus.jpg" height="30" width="30"><br>
+            Enceladus
+        </button>
+        <button id = "btn-mimas" class = "saturn-moon moon-btn" hidden onClick="centerMimas()">
+            <img src = "assets/buttons/mimas.jpg" height="30" width="30"><br>
+            Mimas
+        </button>
+        <button id = "btn-iapetus" class = "saturn-moon moon-btn" hidden onClick="centerIapetus()">
+            <img src = "assets/buttons/iapetus.jpg" height="30" width="30"><br>
+            Iapetus
+        </button>
+        
+        <button id = "btn-uranus" class = 'planet-btn'  onClick="centerUranus()">
+            <img src = "assets/buttons/uranus.jpg" height="30" width="30"><br>
+            Uranus
+        </button>
+        
+        <button id = "btn-Miranda" class = "uranus-moon moon-btn" hidden onClick="centerMiranda()">
+            <img src = "assets/buttons/Miranda.jpg" height="30" width="30"><br>
+            Miranda
+        </button>
+        <button id = "btn-Ariel" class = "uranus-moon moon-btn" hidden onClick="centerAriel()">
+            <img src = "assets/buttons/ariel.jpg" height="30" width="30"><br>
+            Ariel
+        </button>
+        
+        
+        <button id = "btn-neptune" class = 'planet-btn' onClick="centerNeptune()">
+            <img src = "assets/buttons/neptune.jpg" height="30" width="30"><br>
+            Neptune
+        </button>
+        
+        <button id = "btn-Triton" class = "neptune-moon moon-btn" hidden onClick="centerTriton()">
+            <img src = "assets/buttons/triton.png" height="30" width="30"><br>
+            Triton
+        </button>
+        
+        <button id = "btn-toggle-orbit"  onClick="disableOrbit()">Toggle orbit</button>
+        <button id = "btn-log-cam-position"  onClick="logPosition()">Log camera position</button>
         
         <script src = "script/three.js"></script>
         <script src = "script/OrbitControls.js"></script>

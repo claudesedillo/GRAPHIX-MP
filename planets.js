@@ -17,7 +17,7 @@ function initScene(){
     backgroundScene = new THREE.Scene();
     backgroundCamera = new THREE.Camera();
 
-    ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.001);
+    ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.01);
     scene.add(ambientLight);
     
     controls = new THREE.OrbitControls(camera);
@@ -305,23 +305,23 @@ animate();
 //https://stackoverflow.com/questions/24855708/how-can-i-apply-trackballcontrols-to-a-moving-target
 function centerSun(){
     controls.target.copy(sun.position);
-    camera.position.x = planets[0].position.x - 2.5;
-    camera.position.z = planets[0].position.z + 0.8;
     planetSelected = false;
-    console.log("Camera position: ");
-    console.log(camera.position);
+    $('.planet-btn').removeAttr('hidden');
+    $('.moon-btn').prop('hidden', 'hidden');
 }
 
 function centerMercury(){
     planetSelected = true;
     moonSelected = false;
     selectedPlanetIndex = 0;
+    $('.planet-btn').removeAttr('hidden');
 }
 
 function centerVenus(){
     planetSelected = true;
     moonSelected = false;
     selectedPlanetIndex = 1;
+    $('.planet-btn').removeAttr('hidden');
 }
 
 function centerEarth(){
@@ -335,36 +335,54 @@ function centerEarth(){
 //    console.log(camera.position);
     planetSelected = true;
     selectedPlanetIndex = 2;
+    $('.planet-btn').prop('hidden', 'hidden');
+    $('#btn-earth').removeAttr('hidden');
+    $('.earth-moon').removeAttr('hidden');
 }
 
 function centerMars(){
     planetSelected = true;
     moonSelected = false;
     selectedPlanetIndex = 3;
+    $('.planet-btn').prop('hidden', 'hidden');
+    $('#btn-mars').removeAttr('hidden');
+    $('.mars-moon').removeAttr('hidden');
 }
 
 function centerJupiter(){
     planetSelected = true;
     moonSelected = false;
     selectedPlanetIndex = 4;
+    $('.planet-btn').prop('hidden', 'hidden');
+    $('#btn-jupiter').removeAttr('hidden');
+    $('.jupiter-moon').removeAttr('hidden');
 }
 
 function centerSaturn(){
     planetSelected = true;
     moonSelected = false;
     selectedPlanetIndex = 5;
+    $('.planet-btn').prop('hidden', 'hidden');
+    $('#btn-saturn').removeAttr('hidden');
+    $('.saturn-moon').removeAttr('hidden');
 }
 
 function centerUranus(){
     planetSelected = true;
     moonSelected = false;
     selectedPlanetIndex = 6;
+    $('.planet-btn').prop('hidden', 'hidden');
+    $('#btn-uranus').removeAttr('hidden');
+    $('.uranus-moon').removeAttr('hidden');
 }
 
 function centerNeptune(){
     planetSelected = true;
     moonSelected = false;
     selectedPlanetIndex = 7;
+    $('.planet-btn').prop('hidden', 'hidden');
+    $('#btn-neptune').removeAttr('hidden');
+    $('.neptune-moon').removeAttr('hidden');
 }
 
 function centerMoon(){
@@ -393,3 +411,7 @@ function disableOrbit(){
         }
     });
 }
+
+$('document').ready(function(){
+   
+});
