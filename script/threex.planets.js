@@ -150,7 +150,7 @@ THREEx.Planets.createJupiter	= function(){
 THREEx.Planets.createSaturn	= function(){
 	var geometry	= new THREE.SphereGeometry(0.5, 32, 32)
 	var texture	= THREE.ImageUtils.loadTexture('assets/planets/map/saturn.jpg')
-	var material	= new THREE.MeshPhongMaterial({
+	var material	= new THREE.MeshPhysicalMaterial({
 		map	: texture,
 		bumpMap	: texture,
 		bumpScale: 0.05,
@@ -208,7 +208,7 @@ THREEx.Planets.createSaturnRing	= function(){
 	imageMap.src	= 'assets/rings/saturnringcolor.jpg';
 	
 	var geometry	= new THREEx.Planets._RingGeometry(0.55, 0.75, 64);
-	var material	= new THREE.MeshPhongMaterial({
+	var material	= new THREE.MeshPhysicalMaterial({
 		map		: new THREE.Texture(canvasResult),
 		// map		: THREE.ImageUtils.loadTexture(THREEx.Planets.baseURL+'images/ash_uvgrid01.jpg'),
 		side		: THREE.DoubleSide,
@@ -224,7 +224,7 @@ THREEx.Planets.createSaturnRing	= function(){
 THREEx.Planets.createUranus	= function(){
 	var geometry	= new THREE.SphereGeometry(0.5, 32, 32)
 	var texture	= THREE.ImageUtils.loadTexture('assets/planets/map/uranus.jpg')
-	var material	= new THREE.MeshPhongMaterial({
+	var material	= new THREE.MeshPhysicalMaterial({
 		map	: texture,
 		bumpMap	: texture,
 		bumpScale: 0.05,
@@ -281,7 +281,7 @@ THREEx.Planets.createUranusRing	= function(){
 	imageMap.src	= 'assets/rings/uranusringcolour.jpg';
 	
 	var geometry	= new THREEx.Planets._RingGeometry(0.55, 0.75, 64);
-	var material	= new THREE.MeshPhongMaterial({
+	var material	= new THREE.MeshPhysicalMaterial({
 		map		: new THREE.Texture(canvasResult),
 		// map		: THREE.ImageUtils.loadTexture(THREEx.Planets.baseURL+'images/ash_uvgrid01.jpg'),
 		side		: THREE.DoubleSide,
@@ -320,12 +320,12 @@ THREEx.Planets.createPluto	= function(){
 }
 
 THREEx.Planets.createStarfield	= function(){
-	var texture	= THREE.ImageUtils.loadTexture('assets/backgrounds/galaxy_starfield.png')
+	var texture	= THREE.ImageUtils.loadTexture('assets/backgrounds/milky_way.jpg')
 	var material	= new THREE.MeshBasicMaterial({
 		map	: texture,
 		side	: THREE.BackSide
 	})
-	var geometry	= new THREE.SphereGeometry(10000, 32, 32);
+	var geometry	= new THREE.SphereGeometry(9999, 400, 400);
 	var mesh	= new THREE.Mesh(geometry, material)
 	return mesh	
 }

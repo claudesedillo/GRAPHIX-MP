@@ -6,9 +6,12 @@
 - Make planets rotate on axis - mesh.lookat (??)
 - Make orbits elliptic
 - Make orbits incline
-
+-TWEEN when switching planets
 
 - Space engine type where selected planet displays children planets
+- Start at Earth on startup
+
+- Orbit beizeir curve
 
 Moon movement: orbit +/- planet center?
 
@@ -18,3 +21,5 @@ Moon movement: orbit +/- planet center?
 - Make camera follow moon
 
 - Convert to KSP planets and moons
+
+https://www.solarsystemscope.com/textures/
