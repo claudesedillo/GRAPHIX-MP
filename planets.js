@@ -8,6 +8,11 @@ var controls;
 var ambientLight;
 var orbitMaterial;
 
+var terrestrialGeometry = new THREE.SphereGeometry(1, 32, 32);
+var moonGeometry = new THREE.SphereGeometry(0.6, 32, 32);
+var sunGeometry = new THREE.SphereGeometry(18, 32, 32);
+var gasGiantGeometry = new THREE.SphereGeometry(2, 32, 32);
+
 function initScene(){
     scene = new THREE.Scene();
     
@@ -33,11 +38,6 @@ function initScene(){
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
 }
-
-var terrestrialGeometry = new THREE.SphereGeometry(1, 32, 32);
-var moonGeometry = new THREE.SphereGeometry(0.6, 32, 32);
-var sunGeometry = new THREE.SphereGeometry(18, 32, 32);
-var gasGiantGeometry = new THREE.SphereGeometry(2, 32, 32);
 
 function initLights(){
     createSun();
@@ -97,14 +97,8 @@ function createTerrestrialPlanet(name, mapURL, bumpMapURL, orbit, speed){
     planet.speed = speed;
     planets.push(planet);
     
-//    if(planet.name == "Mercury"){
-//        console.log("I am at createTerrestrialPanet, Mercury case");
-//       createMercuryOrbit(orbit, planet);
-//    }
-//    else{
-        createOrbit(orbit);
-        scene.add(planet); 
-//    }
+    createOrbit(orbit);
+    scene.add(planet); 
 }
 
 function createGasGiant(name, mapURL, orbit, speed){
@@ -157,41 +151,6 @@ function createRingedPlanet(name, orbit, speed){
     scene.add(planet);
 }
 
-function createMercuryOrbit(orbit, planet){
-//    /*
-//    
-//    curve = new THREE.EllipseCurve(0,0,80,60,0,toRad(360),false);
-//    path = new THREE.Path( curve.getPoints( 2000 ) );
-//    var geo = path.createPointsGeometry( 50 );
-//
-//    ellipse = new THREE.Line(
-//        geo,
-//        new THREE.LineBasicMaterial( { color : 0xff0000 } ) 
-//        );
-//    DISPLAY.scene.add(ellipse);
-//    */
-//    //orbit
-//    console.log("at createMercuryOrbit");
-//    var shape = new THREE.Shape();
-//    shape.moveTo(orbit, 0);
-//    //shape.absarc(0, 0, orbit, 0, 2 * Math.PI, false);
-//    shape.absellipse(0, 0, orbit, orbit + 50, 0, 2 * Math.PI, false);
-//    var spacedPoints = shape.createSpacedPointsGeometry(128);
-//    spacedPoints.rotateX(THREE.Math.degToRad(-90));
-//    orbitMaterial = new THREE.LineBasicMaterial( {
-//        color: "black",
-//        linewidth: 0.001
-//    } );
-//    
-//    var orbit = new THREE.Line(spacedPoints, orbitMaterial);
-//    orbits.push(orbit);
-//    orbitGroup = new THREE.Group();
-//    orbitGroup.add(orbit);
-//    orbitGroup.add(planet);
-//    scene.add(orbitGroup);
-//    scene.add(orbit);
-}
-
 function createOrbit(orbit){
     //orbit
     var shape = new THREE.Shape();
@@ -209,10 +168,6 @@ function createOrbit(orbit){
     scene.add(orbit);
 }
 
-function createMoonOrbit(){
-    
-}
-
 function animate() {
     requestAnimationFrame(animate);
     sun.rotation.y += 0.01;
@@ -222,25 +177,16 @@ function animate() {
         var orbit = planet.orbit;
         var speed = planet.speed;
         
-//        if(planet.name == "Earth"){
-//            planet.position.x = orbit;
-//            planet.position.z = orbit;
-//        }
-//        else{
+        if(planet.name == "Earth"){
+            planet.position.x = orbit;
+            planet.position.z = orbit;
+        }
+        else{
             planet.position.x = Math.sin(timestamp * speed) * orbit;
             planet.position.z = Math.cos(timestamp * speed) * orbit;
-//        }
-//        if(planet.name == "Mercury"){
-//            if(planet.position.z > 0){
-//                planet.position.x += 50;
-//            }
-//            else if(planet.position.z < 1){
-//                planet.position.z -= 50;
-//            }
-//            console.log("Z pos" + planet.position.z);
-//        }
+        }
+
 //        console.log(moons[0].name);
-//        orbitGroup.rotation.y += 0.01;
 //        moons[0].position.x = Math.sin(timestamp * moons[0].speed) * moons[0].orbit - planets[2].position.x;
 //        moons[0].position.z = Math.cos(timestamp * moons[0].speed) * moons[0].orbit - planets[2].position.z;
         
@@ -266,11 +212,11 @@ function animate() {
         camera.position.z = planets[selectedPlanetIndex].position.z + 3;
         controls.update();
     }
-//    if(moonSelected == true){
-//        controls.target.copy(moons[0].position);
-//        camera.position.x = moons[0].position.x - 2.5;
-//        camera.position.z = moons[0].position.z + 0.8;
-//    }
+    if(moonSelected == true){
+        controls.target.copy(moons[0].position);
+        camera.position.x = moons[0].position.x - 2.5;
+        camera.position.z = moons[0].position.z + 0.8;
+    }
                   
     renderer.render(scene, camera);
     controls.update();
@@ -306,6 +252,7 @@ animate();
 function centerSun(){
     controls.target.copy(sun.position);
     planetSelected = false;
+    moonSelected = false;
     $('.planet-btn').removeAttr('hidden');
     $('.moon-btn').prop('hidden', 'hidden');
 }
@@ -325,15 +272,9 @@ function centerVenus(){
 }
 
 function centerEarth(){
-//    controls.target.copy(planets[2].position);
-//    camera.position.x = planets[0].position.x - 2.5;
-//    camera.position.z = planets[0].position.z + 0.8;
-//    
-//    planetSelected = false;
-//    moonSelected = false;
-//    console.log("Camera position: ");
-//    console.log(camera.position);
     planetSelected = true;
+    moonSelected = false;
+    
     selectedPlanetIndex = 2;
     $('.planet-btn').prop('hidden', 'hidden');
     $('#btn-earth').removeAttr('hidden');
@@ -386,7 +327,7 @@ function centerNeptune(){
 }
 
 function centerMoon(){
-    moonSelected = false;
+    moonSelected = true;
     planetSelected = false;
     selectedMoonIndex = 0;
     
@@ -411,7 +352,3 @@ function disableOrbit(){
         }
     });
 }
-
-$('document').ready(function(){
-   
-});
