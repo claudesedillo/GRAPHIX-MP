@@ -2,16 +2,16 @@ var planets = [], orbits = [], moons = [];
 var sun;
 var moonSelected = false;
 var planetSelected = false;
-var selectedPlanetIndex;
-var scene, camera, renderer, backgroundScene, backgroundCamera;
+var selectedPlanetIndex, selectedMoonIndex;
+var scene, camera, renderer;
 var controls;
 var ambientLight;
 var orbitMaterial;
 var speedModifier = 1;
 
 var terrestrialGeometry = new THREE.SphereGeometry(1, 32, 32);
-var moonGeometry = new THREE.SphereGeometry(0.3, 32, 32);
-var marsMoonGeometry = new THREE.SphereGeometry(0.1, 32, 16);
+var moonGeometry = new THREE.SphereGeometry(0.2, 32, 32);
+var marsMoonGeometry = new THREE.SphereGeometry(0.05, 32, 8);
 var sunGeometry = new THREE.SphereGeometry(18, 32, 32);
 var gasGiantGeometry = new THREE.SphereGeometry(4, 32, 32);
 
@@ -21,9 +21,6 @@ function initScene(){
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 10000 );
     renderer = new THREE.WebGLRenderer();
 
-    backgroundScene = new THREE.Scene();
-    backgroundCamera = new THREE.Camera();
-
     ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.01);
     scene.add(ambientLight);
     
@@ -32,20 +29,16 @@ function initScene(){
 //    camera.position.set(0, 0, 10);
 //    controls.target.set(0,0,0);
     
-    var starSphere	= THREEx.Planets.createStarfield()
-	scene.add(starSphere)
+//    var starSphere	= THREEx.Planets.createStarfield()
+//	scene.add(starSphere)
 
-    renderer.gammaInput = true;
-    renderer.gammaOutput = true;
+//    renderer.gammaInput = true;
+//    renderer.gammaOutput = true;
     renderer.setSize( window.innerWidth, window.innerHeight );
     document.body.appendChild( renderer.domElement );
 }
 
-function initLights(){
-    createSun();
-}
-
-function init(){
+function initPlanets(){
     createTerrestrialPlanet("Mercury", "assets/planets/map/mercury.jpg", "assets/planets/bump/mercurybump.jpg", 200, 3);
     createTerrestrialPlanet("Venus", "assets/planets/map/venus.jpg", "assets/planets/bump/mercurybump.jpg", 600, 2);
     createTerrestrialPlanet("Earth", "assets/planets/map/earth.jpg", "assets/planets/bump/mercurybump.jpg", 1000, 1);
@@ -56,28 +49,26 @@ function init(){
     createGasGiant("Neptune", "assets/planets/map/neptune.jpg", 3000, 0.08);
     
     
-    createMoon("Moon", "assets/moons/map/earth/moon.jpg", "assets/moons/bump/earth/moonbump.jpg", 5, 1, 2);
+    createMoon("Moon", "assets/moons/map/earth/moon.jpg", "assets/moons/bump/earth/moonbump.jpg", 5, 5, 0);
     
-    createMoon("Phobos", "assets/moons/map/mars/phobos.jpg", "assets/moons/bump/mars/phobosBump.jpg", 5, 2, 3);
-    createMoon("Deimos", "assets/moons/map/mars/deimos.jpg", "assets/moons/bump/mars/deimosBump.jpg", 8, 1, 3);
+    createMoon("Phobos", "assets/moons/map/mars/phobos.jpg", "assets/moons/bump/mars/phobosBump.jpg", 3, 2, 3);
+    createMoon("Deimos", "assets/moons/map/mars/deimos.jpg", "assets/moons/bump/mars/deimosBump.jpg", 6, 1, 3);
     
-    createMoon("Callisto", "assets/moons/map/jupiter/callisto.jpg", "assets/moons/bump/jupiter/callistoBump.jpg", 5, 4, 4);
-    createMoon("Ganymede", "assets/moons/map/jupiter/ganymede.jpg", "assets/moons/bump/jupiter/ganymedeBump.jpg", 8, 3, 4);
-    createMoon("Europa", "assets/moons/map/jupiter/europa.jpg", "assets/moons/bump/jupiter/europaBump.jpg", 10, 2, 4);
-    createMoon("Io", "assets/moons/map/jupiter/io.jpg", "assets/moons/bump/jupiter/ioBump.jpg", 12, 1, 4);
+    createMoon("Callisto", "assets/moons/map/jupiter/callisto.jpg", "assets/moons/bump/jupiter/callistoBump.jpg", 35, 1, 4);
+    createMoon("Ganymede", "assets/moons/map/jupiter/ganymede.jpg", "assets/moons/bump/jupiter/ganymedeBump.jpg", 29, 2, 4);
+    createMoon("Europa", "assets/moons/map/jupiter/europa.jpg", "assets/moons/bump/jupiter/europaBump.jpg", 23, 3, 4);
+    createMoon("Io", "assets/moons/map/jupiter/io.jpg", "assets/moons/bump/jupiter/ioBump.jpg", 15, 4, 4);
     
-    createMoon("Titan", "assets/moons/map/saturn/titan.jpg", "assets/moons/bump/saturn/titanBump.jpg", 5, 3, 5);
-    createMoon("Enceladus", "assets/moons/map/saturn/enceladus.jpg", "assets/moons/bump/saturn/enceladusBump.jpg", 8, 2, 5);
-    createMoon("Iapetus", "assets/moons/map/saturn/iapetus.jpg", "assets/moons/bump/saturn/iapetusBump.jpg", 12, 1, 5);
+    createMoon("Titan", "assets/moons/map/saturn/titan.jpg", "assets/moons/bump/saturn/titanBump.jpg", 25, 3, 5);
+    createMoon("Enceladus", "assets/moons/map/saturn/enceladus.jpg", "assets/moons/bump/saturn/enceladusBump.jpg", 15, 2, 5);
+    createMoon("Mimas", "assets/moons/map/saturn/mimas.png", "assets/moons/bump/saturn/mimasBump.png", 10, 2, 5);
+    createMoon("Iapetus", "assets/moons/map/saturn/iapetus.jpg", "assets/moons/bump/saturn/iapetusBump.jpg", 45, 1, 5);
     
-    createMoon("Miranda", "assets/moons/map/uranus/miranda.jpg", "assets/moons/bump/uranus/mirandaBump.jpg", 5, 1, 6);
+    createMoon("Miranda", "assets/moons/map/uranus/miranda.jpg", "assets/moons/bump/uranus/mirandaBump.jpg", 10, 1, 6);
     
-    createMoon("Triton", "assets/moons/map/neptune/triton.jpg", "assets/moons/bump/neptune/tritonBump.jpg", 5, 1, 7);
+    createMoon("Triton", "assets/moons/map/neptune/triton.jpg", "assets/moons/bump/neptune/tritonBump.jpg", 10, 1, 7);
     centerEarth();
-    renderer.shadowMap.renderReverseSided = false;
-    renderer.shadowMap.enabled = true;
-    camera.recieveShadow = true;
-    camera.castShadow = true;
+
 }
 
 function createSun(){
@@ -259,49 +250,27 @@ function animate() {
         camera.position.x = moons[selectedMoonIndex].position.x - 2.5;
         camera.position.z = moons[selectedMoonIndex].position.z + 0.8;
     }
-                  
+    
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     renderer.render(scene, camera);
     controls.update();
 }
 
 function positionSun(){
     sun.position.set(0, 0, 0);
-    sunlight = new THREE.PointLight( 0xFDB813, 2, 5000, 2);
-    
-    sunlight.shadow = new THREE.LightShadow( new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 10000 ) );
-    sunlight.shadow.bias = - 0.0000000022;
-
-	sunlight.shadow.mapSize.width = 2048;
-	sunlight.shadow.mapSize.height = 2048;
-    sunlight.castShadow = true;
-//    sunlight.shadowCameraVisible = true;
-    
-    var d = 3000;
-    
-    sunlight.shadowCameraLeft = -d;
-    sunlight.shadowCameraRight = d;
-    sunlight.shadowCameraTop = d;
-    sunlight.shadowCameraBottom = -d;
-    sunlight.shadowCameraFar = 3000;
-    
+    sunlight = new THREE.PointLight( 0xFDB813, 2, 0, 2);  
     sunlight.position.copy(sun.position);
-    
+    sunlight.castShadow = true;
+    sunlight.shadow.mapSize.set(4096, 4096);
     scene.add(sunlight);
     console.log("Sun position: ")
     console.log(sun.position);
 }
 
-function positionPlanet(planet){
-    planet.position.set(initialx, 0, initialz);
-    initialz += 10;
-    initialx -= 10;
-    console.log(planet.name + ":");
-    console.log(planet.position);
-}
-
 initScene();
-initLights();
-init();
+createSun();
+initPlanets();
 animate();
 
 //https://stackoverflow.com/questions/30918864/orbit-camera-lookat-change
@@ -472,7 +441,7 @@ function centerTitan(){
 }
 
 function centerEnceladus(){
-    console.log("centerTitan clicked!");
+    console.log("centerEnceladus clicked!");
     moonSelected = true;
     planetSelected = false;
     selectedMoonIndex = 8;
@@ -482,8 +451,8 @@ function centerEnceladus(){
     camera.position.z = moons[8].position.z + 0.8;    
 }
 
-function centerIapetus(){
-    console.log("centerTitan clicked!");
+function centerMimas(){
+    console.log("centerMimas clicked!");
     moonSelected = true;
     planetSelected = false;
     selectedMoonIndex = 9;
@@ -493,15 +462,26 @@ function centerIapetus(){
     camera.position.z = moons[9].position.z + 0.8;    
 }
 
-function centerMiranda(){
-    console.log("centerTitan clicked!");
+function centerIapetus(){
+    console.log("centerIapetus clicked!");
     moonSelected = true;
     planetSelected = false;
-    selectedMoonIndex = 10;
+    selectedMoonIndex = 9;
     console.log("Selected moon index " + selectedMoonIndex)
     controls.target.copy(moons[10].position);
     camera.position.x = moons[10].position.x - 2.5;
     camera.position.z = moons[10].position.z + 0.8;    
+}
+
+function centerMiranda(){
+    console.log("centerMiranda clicked!");
+    moonSelected = true;
+    planetSelected = false;
+    selectedMoonIndex = 10;
+    console.log("Selected moon index " + selectedMoonIndex)
+    controls.target.copy(moons[11].position);
+    camera.position.x = moons[11].position.x - 2.5;
+    camera.position.z = moons[11].position.z + 0.8;    
 }
 
 function centerTriton(){
@@ -533,7 +513,7 @@ function disableOrbit(){
 }
 
 function normalSpeed(){
-    speedModifier = 1
+    speedModifier = 1;
 }
 
 function fastForward(){
