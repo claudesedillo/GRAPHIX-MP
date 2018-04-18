@@ -5,10 +5,12 @@
 (DONE) Start at Earth on startup
 (DONE) Space engine type where selected planet displays children planets
 (DONE) Make moons revolve around planets
+(DONE) Add all moon textures in the project folder
+(DONE) Add all moons to their respective planets
 
+- Make functions to focus on moons
 - Make tidally locked moons rotate around planet's center
 - Make moons cast shadows on planet and vice versa
-- Add all moon textures in the project folder
 
 - Make planets rotate on axis - mesh.lookat (??)
 - Make orbits elliptic
