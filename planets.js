@@ -7,6 +7,7 @@ var scene, camera, renderer, backgroundScene, backgroundCamera;
 var controls;
 var ambientLight;
 var orbitMaterial;
+var speedModifier = 1;
 
 var terrestrialGeometry = new THREE.SphereGeometry(1, 32, 32);
 var moonGeometry = new THREE.SphereGeometry(0.6, 32, 32);
@@ -44,14 +45,14 @@ function initLights(){
 }
 
 function init(){
-    createTerrestrialPlanet("Mercury", "assets/planets/map/mercury.jpg", "assets/planets/bump/mercurybump.jpg", 50, 3);
-    createTerrestrialPlanet("Venus", "assets/planets/map/venus.jpg", "assets/planets/bump/mercurybump.jpg", 350, 2);
-    createTerrestrialPlanet("Earth", "assets/planets/map/earth.jpg", "assets/planets/bump/mercurybump.jpg", 480, 1);
-    createTerrestrialPlanet("Mars", "assets/planets/map/mars.jpg", "assets/planets/bump/mercurybump.jpg", 550, 0.5);
-    createGasGiant("Jupiter", "assets/planets/map/jupiter.jpg", 720, 0.4);
-    createRingedPlanet("Saturn", 830, 0.2);
-    createRingedPlanet("Uranus", 980, 0.1);
-    createGasGiant("Neptune", "assets/planets/map/neptune.jpg", 1080, 0.08);
+    createTerrestrialPlanet("Mercury", "assets/planets/map/mercury.jpg", "assets/planets/bump/mercurybump.jpg", 200, 3);
+    createTerrestrialPlanet("Venus", "assets/planets/map/venus.jpg", "assets/planets/bump/mercurybump.jpg", 600, 2);
+    createTerrestrialPlanet("Earth", "assets/planets/map/earth.jpg", "assets/planets/bump/mercurybump.jpg", 1000, 1);
+    createTerrestrialPlanet("Mars", "assets/planets/map/mars.jpg", "assets/planets/bump/mercurybump.jpg", 1400, 0.5);
+    createGasGiant("Jupiter", "assets/planets/map/jupiter.jpg", 1800, 0.4);
+    createRingedPlanet("Saturn", 2200, 0.2);
+    createRingedPlanet("Uranus", 2600, 0.1);
+    createGasGiant("Neptune", "assets/planets/map/neptune.jpg", 3000, 0.08);
     centerEarth();
     //createMoon("Moon", "assets/moons/map/moon.jpg", "assets/moons/bump/moonbump.jpg", 15, 0.5, 2);
 }
@@ -182,8 +183,8 @@ function animate() {
             planet.position.z = orbit;
         }
         else{
-            planet.position.x = Math.sin(timestamp * speed) * orbit;
-            planet.position.z = Math.cos(timestamp * speed) * orbit;
+            planet.position.x = Math.sin(timestamp * speed * speedModifier) * orbit;
+            planet.position.z = Math.cos(timestamp * speed * speedModifier) * orbit;
         }
 
 //        console.log(moons[0].name);
@@ -193,13 +194,13 @@ function animate() {
            
         if(planet.name == "Venus"){
             planet.rotation.y -= 0.01;
-            planet.position.x = Math.cos(timestamp * speed) * orbit;
-            planet.position.z = Math.sin(timestamp * speed) * orbit;
+            planet.position.x = Math.cos(timestamp * speed * speedModifier) * orbit;
+            planet.position.z = Math.sin(timestamp * speed * speedModifier) * orbit;
         }
         else if(planet.name == "Uranus"){
             planet.rotation.z += 0.01;
-            planet.position.x = Math.cos(timestamp * speed) * orbit;
-            planet.position.z = Math.sin(timestamp * speed) * orbit;
+            planet.position.x = Math.cos(timestamp * speed * speedModifier) * orbit;
+            planet.position.z = Math.sin(timestamp * speed * speedModifier) * orbit;
         }
         else{
             planet.rotation.y += 0.01;
@@ -351,4 +352,12 @@ function disableOrbit(){
             orbit.material.color.setHex(0xffffff);
         }
     });
+}
+
+function normalSpeed(){
+    speedModifier = 1
+}
+
+function fastForward(){
+    speedModifier = 5;
 }
