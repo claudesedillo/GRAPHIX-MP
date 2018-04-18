@@ -10,7 +10,7 @@ var orbitMaterial;
 var speedModifier = 1;
 
 var terrestrialGeometry = new THREE.SphereGeometry(1, 32, 32);
-var moonGeometry = new THREE.SphereGeometry(0.6, 32, 32);
+var moonGeometry = new THREE.SphereGeometry(0.3, 32, 32);
 var sunGeometry = new THREE.SphereGeometry(18, 32, 32);
 var gasGiantGeometry = new THREE.SphereGeometry(2, 32, 32);
 
@@ -54,7 +54,7 @@ function init(){
     createRingedPlanet("Uranus", 2600, 0.1);
     createGasGiant("Neptune", "assets/planets/map/neptune.jpg", 3000, 0.08);
     centerEarth();
-    createMoon("Moon", "assets/moons/map/moon.jpg", "assets/moons/bump/moonbump.jpg", 5, 0.5, 2);
+    createMoon("Moon", "assets/moons/map/moon.jpg", "assets/moons/bump/moonbump.jpg", 5, 1, 2);
 }
 
 function createSun(){
@@ -178,14 +178,14 @@ function animate() {
         var orbit = planet.orbit;
         var speed = planet.speed;
         
-        if(planet.name == "Earth"){
-            planet.position.x = orbit;
-            planet.position.z = orbit;
-        }
-        else{
+//        if(planet.name == "Earth"){
+//            planet.position.x = orbit;
+//            planet.position.z = orbit;
+//        }
+//        else{
             planet.position.x = Math.sin(timestamp * speed * speedModifier) * orbit;
             planet.position.z = Math.cos(timestamp * speed * speedModifier) * orbit;
-        }
+//        }
 
         console.log(moons[0].position);
         moons[0].position.x = Math.sin(timestamp * moons[0].speed * speedModifier) * moons[0].orbit + planets[moons[0].planetIndex].position.x;
