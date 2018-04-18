@@ -54,7 +54,7 @@ function init(){
     createRingedPlanet("Uranus", 2600, 0.1);
     createGasGiant("Neptune", "assets/planets/map/neptune.jpg", 3000, 0.08);
     centerEarth();
-    //createMoon("Moon", "assets/moons/map/moon.jpg", "assets/moons/bump/moonbump.jpg", 15, 0.5, 2);
+    createMoon("Moon", "assets/moons/map/moon.jpg", "assets/moons/bump/moonbump.jpg", 5, 0.5, 2);
 }
 
 function createSun(){
@@ -187,9 +187,9 @@ function animate() {
             planet.position.z = Math.cos(timestamp * speed * speedModifier) * orbit;
         }
 
-//        console.log(moons[0].name);
-//        moons[0].position.x = Math.sin(timestamp * moons[0].speed) * moons[0].orbit - planets[2].position.x;
-//        moons[0].position.z = Math.cos(timestamp * moons[0].speed) * moons[0].orbit - planets[2].position.z;
+        console.log(moons[0].position);
+        moons[0].position.x = Math.sin(timestamp * moons[0].speed * speedModifier) * moons[0].orbit + planets[moons[0].planetIndex].position.x;
+        moons[0].position.z = Math.cos(timestamp * moons[0].speed * speedModifier) * moons[0].orbit + planets[moons[0].planetIndex].position.z;
         
            
         if(planet.name == "Venus"){
