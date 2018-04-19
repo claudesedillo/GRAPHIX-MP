@@ -49,7 +49,7 @@ function initPlanets(){
     createGasGiant("Neptune", "assets/planets/map/neptune.jpg", 3000, 0.08);
     
     
-    createMoon("Moon", "assets/moons/map/earth/moon.jpg", "assets/moons/bump/earth/moonbump.jpg", 5, 5, 0);
+    createMoon("Moon", "assets/moons/map/earth/moon.jpg", "assets/moons/bump/earth/moonbump.jpg", 5, 5, 2);
     
     createMoon("Phobos", "assets/moons/map/mars/phobos.jpg", "assets/moons/bump/mars/phobosBump.jpg", 3, 2, 3);
     createMoon("Deimos", "assets/moons/map/mars/deimos.jpg", "assets/moons/bump/mars/deimosBump.jpg", 6, 1, 3);
@@ -262,7 +262,9 @@ function positionSun(){
     sunlight = new THREE.PointLight( 0xFDB813, 2, 0, 2);  
     sunlight.position.copy(sun.position);
     sunlight.castShadow = true;
-    sunlight.shadow.mapSize.set(4096, 4096);
+    sunlight.shadow.mapSize.set(4096,4096);
+    sunlight.shadow.radius = 1.75;
+    sunlight.shadow.camera.far = 99999;
     scene.add(sunlight);
     console.log("Sun position: ")
     console.log(sun.position);
