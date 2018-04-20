@@ -21,7 +21,7 @@ function initScene(){
     camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 10000 );
     renderer = new THREE.WebGLRenderer();
 
-    ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.01);
+    ambientLight = new THREE.AmbientLight(0xFFFFFF, 0.05);
     scene.add(ambientLight);
     
     controls = new THREE.OrbitControls(camera);
