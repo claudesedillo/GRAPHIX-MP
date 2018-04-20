@@ -118,6 +118,12 @@ function createTerrestrialPlanet(name, mapURL, bumpMapURL, orbit, speed){
     material.transparent = false
 	var planet	= new THREE.Mesh(terrestrialGeometry, material);
     
+    if(name == "Earth" || name == "Mars"){
+        var radians = 23.4 * Math.PI / 180; // tilt in radians
+        planet.geometry.applyMatrix( new THREE.Matrix4().makeRotationZ( - radians ) );
+        var axis = new THREE.Vector3( Math.sin( radians ), Math.cos( radians ), 0 ).normalize();
+        planet.axis = axis;
+    }
     planet.name = name;
     planet.orbit = orbit;
     planet.speed = speed;
@@ -218,7 +224,10 @@ function animate() {
         planet.position.x = Math.sin(timestamp * speed * speedModifier) * orbit;
         planet.position.z = Math.cos(timestamp * speed * speedModifier) * orbit;
            
-        if(planet.name == "Venus"){
+        if(planet.name == "Earth" || planet.name == "Mars"){
+            planet.rotateOnAxis( planet.axis, 0.02 * speedModifier);
+        }
+        else if(planet.name == "Venus"){
             planet.rotation.y -= 0.01 * speedModifier;
             planet.position.x = Math.cos(timestamp * speed * speedModifier) * orbit;
             planet.position.z = Math.sin(timestamp * speed * speedModifier) * orbit;
@@ -229,7 +238,7 @@ function animate() {
             planet.position.z = Math.sin(timestamp * speed * speedModifier) * orbit;
         }
         else{
-            planet.rotation.y += 0.01 * speedModifier;
+            planet.rotation.y += 0.03 * speedModifier;
         }
     });
     
