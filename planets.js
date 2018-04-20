@@ -219,24 +219,24 @@ function animate() {
         planet.position.z = Math.cos(timestamp * speed * speedModifier) * orbit;
            
         if(planet.name == "Venus"){
-            planet.rotation.y -= 0.01;
+            planet.rotation.y -= 0.01 * speedModifier;
             planet.position.x = Math.cos(timestamp * speed * speedModifier) * orbit;
             planet.position.z = Math.sin(timestamp * speed * speedModifier) * orbit;
         }
         else if(planet.name == "Uranus"){
-            planet.rotation.z += 0.01;
+            planet.rotation.z += 0.01 * speedModifier;
             planet.position.x = Math.cos(timestamp * speed * speedModifier) * orbit;
             planet.position.z = Math.sin(timestamp * speed * speedModifier) * orbit;
         }
         else{
-            planet.rotation.y += 0.01;
+            planet.rotation.y += 0.01 * speedModifier;
         }
     });
     
     moons.forEach(function(moon) {
         moon.position.x = Math.sin(timestamp * moon.speed * speedModifier) * moon.orbit + planets[moon.planetIndex].position.x;
         moon.position.z = Math.cos(timestamp * moon.speed * speedModifier) * moon.orbit + planets[moon.planetIndex].position.z;
-        moon.rotation.y += 0.01;
+        moon.rotation.y += 0.01 * speedModifier;
     });
                   
     if(planetSelected == true){

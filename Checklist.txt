@@ -7,24 +7,17 @@
 (DONE) Make moons revolve around planets
 (DONE) Add all moon textures in the project folder
 (DONE) Add all moons to their respective planets
+(DONE) Make functions to focus on moons
+(DONE) Make moons cast shadows on planet and vice versa
 
-- Make functions to focus on moons
-- Make tidally locked moons rotate around planet's center
-- Make moons cast shadows on planet and vice versa
-
+- TWEEN when switching planets and moons
 - Make planets rotate on axis - mesh.lookat (??)
 - Make orbits elliptic
 - Make orbits incline
-
--TWEEN when switching planets
 - Orbit beizeir curve
 
 Moon movement: orbit +/- planet center?
 
-- Import moon textures to threejs
 - Make moon orbits elliptical and tilted
-- Make camera follow moon
-
-- Convert to KSP planets and moons
 
 https://www.solarsystemscope.com/textures/

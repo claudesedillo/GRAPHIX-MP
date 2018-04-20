@@ -404,5 +404,3 @@ THREEx.Planets._RingGeometry = function ( innerRadius, outerRadius, thetaSegment
 
 };
 THREEx.Planets._RingGeometry.prototype = Object.create( THREE.Geometry.prototype );
-
-
