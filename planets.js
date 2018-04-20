@@ -29,8 +29,8 @@ function initScene(){
 //    camera.position.set(0, 0, 10);
 //    controls.target.set(0,0,0);
     
-//    var starSphere	= THREEx.Planets.createStarfield()
-//	scene.add(starSphere)
+    var starSphere	= THREEx.Planets.createStarfield()
+	scene.add(starSphere)
 
 //    renderer.gammaInput = true;
 //    renderer.gammaOutput = true;
@@ -242,13 +242,14 @@ function animate() {
     if(planetSelected == true){
         controls.target.copy(planets[selectedPlanetIndex].position);
         camera.position.x = planets[selectedPlanetIndex].position.x - 3;
-        camera.position.z = planets[selectedPlanetIndex].position.z + 3;
+        camera.position.z = planets[selectedPlanetIndex].position.z + 0.5;
         controls.update();
     }
     if(moonSelected == true){
+        console.log(moons[selectedMoonIndex].name);
         controls.target.copy(moons[selectedMoonIndex].position);
         camera.position.x = moons[selectedMoonIndex].position.x - 2.5;
-        camera.position.z = moons[selectedMoonIndex].position.z + 0.8;
+        camera.position.z = moons[selectedMoonIndex].position.z + 0.5;
     }
     
     renderer.shadowMap.enabled = true;
@@ -259,7 +260,7 @@ function animate() {
 
 function positionSun(){
     sun.position.set(0, 0, 0);
-    sunlight = new THREE.PointLight( 0xFDB813, 2, 0, 2);  
+    sunlight = new THREE.PointLight( 0xffda80, 2, 0, 2);  
     sunlight.position.copy(sun.position);
     sunlight.castShadow = true;
     sunlight.shadow.mapSize.set(4096,4096);
@@ -331,6 +332,7 @@ function centerSaturn(){
     planetSelected = true;
     moonSelected = false;
     selectedPlanetIndex = 5;
+    
     $('.planet-btn').prop('hidden', 'hidden');
     $('#btn-saturn').removeAttr('hidden');
     $('.saturn-moon').removeAttr('hidden');
@@ -354,148 +356,18 @@ function centerNeptune(){
     $('.neptune-moon').removeAttr('hidden');
 }
 
-function centerMoon(){
-    console.log("centerMoon clicked!");
-    moonSelected = true;
-    planetSelected = false;
-    selectedMoonIndex = 0;
-    console.log("Selected moon index " + selectedMoonIndex)
-    controls.target.copy(moons[0].position);
-    camera.position.x = moons[0].position.x - 2.5;
-    camera.position.z = moons[0].position.z + 0.8;
-}
-
-function centerPhobos(){
-    console.log("centerPhobos clicked!");
-    moonSelected = true;
-    planetSelected = false;
-    selectedMoonIndex = 1;
-    console.log("Selected moon index " + selectedMoonIndex)
-    controls.target.copy(moons[1].position);
-    camera.position.x = moons[1].position.x - 2.5;
-    camera.position.z = moons[1].position.z + 0.8;    
-}
-
-function centerDeimos(){
-    console.log("centerDeimos clicked!");
-    moonSelected = true;
-    planetSelected = false;
-    selectedMoonIndex = 2;
-    console.log("Selected moon index " + selectedMoonIndex)
-    controls.target.copy(moons[2].position);
-    camera.position.x = moons[2].position.x - 2.5;
-    camera.position.z = moons[2].position.z + 0.8;   
-}
-
-function centerGanymede(){
-    console.log("centerGanymede clicked!");
-    moonSelected = true;
-    planetSelected = false;
-    selectedMoonIndex = 3;
-    console.log("Selected moon index " + selectedMoonIndex)
-    controls.target.copy(moons[3].position);
-    camera.position.x = moons[3].position.x - 2.5;
-    camera.position.z = moons[3].position.z + 0.8;    
-}
-
-function centerCallisto(){
-    console.log("centerCallisto clicked!");
-    moonSelected = true;
-    planetSelected = false;
-    selectedMoonIndex = 4;
-    console.log("Selected moon index " + selectedMoonIndex)
-    controls.target.copy(moons[4].position);
-    camera.position.x = moons[4].position.x - 2.5;
-    camera.position.z = moons[4].position.z + 0.8;    
-}
-
-function centerIo(){
-    console.log("centerIo clicked!");
-    moonSelected = true;
-    planetSelected = false;
-    selectedMoonIndex = 5;
-    console.log("Selected moon index " + selectedMoonIndex)
-    controls.target.copy(moons[5].position);
-    camera.position.x = moons[5].position.x - 2.5;
-    camera.position.z = moons[5].position.z + 0.8;    
-}
-
-function centerEuropa(){
-    console.log("centerEuropa clicked!");
-    moonSelected = true;
-    planetSelected = false;
-    selectedMoonIndex = 6;
-    console.log("Selected moon index " + selectedMoonIndex)
-    controls.target.copy(moons[6].position);
-    camera.position.x = moons[6].position.x - 2.5;
-    camera.position.z = moons[6].position.z + 0.8;    
-}
-
-function centerTitan(){
-    console.log("centerTitan clicked!");
-    moonSelected = true;
-    planetSelected = false;
-    selectedMoonIndex = 7;
-    console.log("Selected moon index " + selectedMoonIndex)
-    controls.target.copy(moons[7].position);
-    camera.position.x = moons[7].position.x - 2.5;
-    camera.position.z = moons[7].position.z + 0.8;    
-}
-
-function centerEnceladus(){
-    console.log("centerEnceladus clicked!");
-    moonSelected = true;
-    planetSelected = false;
-    selectedMoonIndex = 8;
-    console.log("Selected moon index " + selectedMoonIndex)
-    controls.target.copy(moons[8].position);
-    camera.position.x = moons[8].position.x - 2.5;
-    camera.position.z = moons[8].position.z + 0.8;    
-}
-
-function centerMimas(){
-    console.log("centerMimas clicked!");
-    moonSelected = true;
-    planetSelected = false;
-    selectedMoonIndex = 9;
-    console.log("Selected moon index " + selectedMoonIndex)
-    controls.target.copy(moons[9].position);
-    camera.position.x = moons[9].position.x - 2.5;
-    camera.position.z = moons[9].position.z + 0.8;    
-}
-
-function centerIapetus(){
-    console.log("centerIapetus clicked!");
-    moonSelected = true;
-    planetSelected = false;
-    selectedMoonIndex = 9;
-    console.log("Selected moon index " + selectedMoonIndex)
-    controls.target.copy(moons[10].position);
-    camera.position.x = moons[10].position.x - 2.5;
-    camera.position.z = moons[10].position.z + 0.8;    
-}
-
-function centerMiranda(){
-    console.log("centerMiranda clicked!");
-    moonSelected = true;
-    planetSelected = false;
-    selectedMoonIndex = 10;
-    console.log("Selected moon index " + selectedMoonIndex)
-    controls.target.copy(moons[11].position);
-    camera.position.x = moons[11].position.x - 2.5;
-    camera.position.z = moons[11].position.z + 0.8;    
-}
-
-function centerTriton(){
-    console.log("centerTitan clicked!");
-    moonSelected = true;
-    planetSelected = false;
-    selectedMoonIndex = 11;
-    console.log("Selected moon index " + selectedMoonIndex)
-    controls.target.copy(moons[11].position);
-    camera.position.x = moons[11].position.x - 2.5;
-    camera.position.z = moons[11].position.z + 0.8;    
-}
+$("document").ready(function(){
+    $(document).on("click", ".moon-btn", function(){
+        var moonIndex = $(this).attr("data-moonIndex");
+        moonSelected = true;
+        planetSelected = false;
+        selectedMoonIndex = moonIndex;
+            
+        controls.target.copy(moons[selectedMoonIndex].position);
+        camera.position.x = moons[selectedMoonIndex].position.x - 2.5;
+        camera.position.z = moons[selectedMoonIndex].position.z + 0.8;            
+    });
+});
 
 function logPosition(){
     console.log(camera.position);

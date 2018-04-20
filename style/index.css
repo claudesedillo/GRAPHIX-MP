@@ -6,3 +6,6 @@ button{
 button:hover{
     color: white;
 }
+.float-right{
+    float: right;
+}

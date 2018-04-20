@@ -22,7 +22,7 @@
             Earth
         </button>
         
-        <button id = "btn-moon" class = "earth-moon moon-btn" hidden onClick="centerMoon()">
+        <button id = "btn-moon" class = "earth-moon moon-btn" data-moonIndex = 0 hidden onClick="centerMoon()">
             <img src = "assets/buttons/moon.jpg" height="30" width="30"><br>
             Moon
         </button>
@@ -32,11 +32,11 @@
             Mars
         </button>
         
-        <button id = "btn-phobos" class = "mars-moon moon-btn" hidden onClick="centerPhobos()">
+        <button id = "btn-phobos" class = "mars-moon moon-btn" data-moonIndex = 1 hidden onClick="centerPhobos()">
             <img src = "assets/buttons/phobos.jpg" height="30" width="30"><br>
             Phobos
         </button>
-        <button id = "btn-deimos" class = "mars-moon moon-btn" hidden onClick="centerDeimos()">
+        <button id = "btn-deimos" class = "mars-moon moon-btn" data-moonIndex = 2 hidden onClick="centerDeimos()">
             <img src = "assets/buttons/deimos.jpg" height="30" width="30"><br>
             Deimos
         </button>
@@ -46,19 +46,19 @@
             Jupiter
         </button>
         
-        <button id = "btn-callisto" class = "jupiter-moon moon-btn" hidden onClick="centerCallisto()">
+        <button id = "btn-callisto" class = "jupiter-moon moon-btn" data-moonIndex = 3 hidden onClick="centerCallisto()">
             <img src = "assets/buttons/Callisto.jpg" height="30" width="30"><br>
             Callisto
         </button>
-        <button id = "btn-ganymede"  class = "jupiter-moon moon-btn" hidden onClick="centerGanymede()">
+        <button id = "btn-ganymede"  class = "jupiter-moon moon-btn" data-moonIndex = 4 hidden onClick="centerGanymede()">
             <img src = "assets/buttons/ganymede.jpg" height="30" width="30"><br>
             Ganymede
         </button>
-        <button id = "btn-io" class = "jupiter-moon moon-btn" hidden onClick="centerIo()">
+        <button id = "btn-io" class = "jupiter-moon moon-btn" data-moonIndex = 5 hidden onClick="centerIo()">
             <img src = "assets/buttons/io.jpg" height="30" width="30"><br>
             Io
         </button>
-        <button id = "btn-europa" class = "jupiter-moon moon-btn" hidden onClick="centerEuropa()">
+        <button id = "btn-europa" class = "jupiter-moon moon-btn" data-moonIndex = 6 hidden onClick="centerEuropa()">
             <img src = "assets/buttons/europa.jpg" height="30" width="30"><br>
             Europa
         </button>
@@ -68,19 +68,19 @@
             Saturn
         </button>
         
-        <button id = "btn-titan" class = "saturn-moon moon-btn" hidden onClick="centerTitan()">
+        <button id = "btn-titan" class = "saturn-moon moon-btn" data-moonIndex = 7 hidden onClick="centerTitan()">
             <img src = "assets/buttons/titan.jpg" height="30" width="30"><br>
             Titan
         </button>
-        <button id = "btn-enceladus" class = "saturn-moon moon-btn" hidden onClick="centerEnceladus()">
+        <button id = "btn-enceladus" class = "saturn-moon moon-btn" data-moonIndex = 8 hidden onClick="centerEnceladus()">
             <img src = "assets/buttons/enceladus.jpg" height="30" width="30"><br>
             Enceladus
         </button>
-        <button id = "btn-mimas" class = "saturn-moon moon-btn" hidden onClick="centerMimas()">
+        <button id = "btn-mimas" class = "saturn-moon moon-btn" data-moonIndex = 9 hidden onClick="centerMimas()">
             <img src = "assets/buttons/mimas.jpg" height="30" width="30"><br>
             Mimas
         </button>
-        <button id = "btn-iapetus" class = "saturn-moon moon-btn" hidden onClick="centerIapetus()">
+        <button id = "btn-iapetus" class = "saturn-moon moon-btn" data-moonIndex = 10 hidden onClick="centerIapetus()">
             <img src = "assets/buttons/iapetus.jpg" height="30" width="30"><br>
             Iapetus
         </button>
@@ -90,7 +90,7 @@
             Uranus
         </button>
         
-        <button id = "btn-Miranda" class = "uranus-moon moon-btn" hidden onClick="centerMiranda()">
+        <button id = "btn-Miranda" class = "uranus-moon moon-btn" data-moonIndex = 11 hidden onClick="centerMiranda()">
             <img src = "assets/buttons/Miranda.jpg" height="30" width="30"><br>
             Miranda
         </button>
@@ -101,17 +101,18 @@
             Neptune
         </button>
         
-        <button id = "btn-Triton" class = "neptune-moon moon-btn" hidden onClick="centerTriton()">
+        <button id = "btn-Triton" class = "neptune-moon moon-btn" data-moonIndex = 12 hidden onClick="centerTriton()">
             <img src = "assets/buttons/triton.png" height="30" width="30"><br>
             Triton
         </button>
         
-        <button id = "btn-toggle-orbit"  onClick="disableOrbit()">Toggle orbit</button>
-        <button id = "btn-log-cam-position"  onClick="logPosition()">Log camera position</button>
-        <button id = "btn-log-cam-position"  onClick="normalSpeed()">Normal Speed</button>
-        <button id = "btn-log-cam-position"  onClick="fastForward()">Fast forward</button>
+        <button id = "btn-toggle-orbit" class = "float-right"  onClick="disableOrbit()">Toggle orbit</button>
+<!--        <button id = "btn-log-cam-position"  onClick="logPosition()">Log camera position</button>-->
+        <button id = "btn-log-cam-position" class = "float-right"  onClick="normalSpeed()">Normal Speed</button>
+        <button id = "btn-log-cam-position" class = "float-right"  onClick="fastForward()">Fast forward</button>
         
         <script src = "script/three.js"></script>
+        <script src = "script/Tween.js"></script>
         <script src = "script/OrbitControls.js"></script>
         <script src = "script/threex.planets.js"></script>
         <script src = "planets.js"></script>

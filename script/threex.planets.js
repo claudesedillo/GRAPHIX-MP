@@ -325,8 +325,9 @@ THREEx.Planets.createStarfield	= function(){
 		map	: texture,
 		side	: THREE.BackSide
 	})
-	var geometry	= new THREE.SphereGeometry(9999, 400, 400);
+	var geometry	= new THREE.SphereGeometry(5000, 32, 32);
 	var mesh	= new THREE.Mesh(geometry, material)
+    mesh.material.side = THREE.DoubleSide;
 	return mesh	
 }
 
